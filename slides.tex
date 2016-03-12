@@ -1,0 +1,179 @@
+\documentclass{beamer}
+
+%% TODO:
+% Some misc notes:
+git:
+
+%Where it comes from (parable) 
+%eWhat you can do with it
+%eWhy it’s better than subversion
+%e  cheap branching
+%eWhat’s bad about it, and how to mitigate those factors
+%e  dumb syntax
+%eGUIs and web tools
+%eHow to learn more
+%e
+%eGood habits it encourages
+%e  Working on atomic units of progress
+%e  Summarizing and explaining what you’re doing
+%e  Making your progress visible to other people [esp. remote collaborators]
+%e  Writing to be shared and extended
+%e  Moving between working states
+%e  Backing up remotely
+%e  Maintaining a canonical version (“upstream”) of a project
+%e
+%eThe main objective:
+%e  Overcome the energy barrier to learn and become comfortable with the tools.
+
+
+
+
+%\usepackage[backend=bibtex,maxnames=100]{biblatex} %from macports texlive-bibtex-extra
+%\addbibresource{PFKrylov.bib}
+%\renewcommand{\footnotesize}{\tiny}
+
+
+\usetheme{Madrid}
+\setbeamertemplate{navigation symbols}{} % Remove the navigation symbols
+\setbeamertemplate{sections/subsections in toc}[default] %Turn off ugly toc numbering
+\setbeamertemplate{itemize subitem}[triangle]
+\setbeamertemplate{itemize item}[triangle]
+\setbeamertemplate{enumerate items}[default]
+%\setbeamercovered{transparent}
+\usepackage{appendixnumberbeamer}
+\defbeamertemplate{section page}{customsection}[1][]{%
+  \begin{centering}
+    {\usebeamerfont{section name}\usebeamercolor[fg]{section name}#1}
+    \vskip1em\par
+    \begin{beamercolorbox}[sep=12pt,center]{part title}
+      \usebeamerfont{section title}\insertsection\par
+    \end{beamercolorbox}
+  \end{centering}
+}
+\defbeamertemplate{subsection page}{customsubsection}[1][]{%
+  \begin{centering}
+    {\usebeamerfont{subsection name}\usebeamercolor[fg]{subsection name}#1}
+    \vskip1em\par
+    \begin{beamercolorbox}[sep=8pt,center,#1]{part title}
+      \usebeamerfont{subsection title}\insertsubsection\par
+    \end{beamercolorbox}
+  \end{centering}
+}
+\AtBeginSection{\frame{\sectionpage}}
+%\AtBeginSubsection{\frame{\subsectionpage}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\graphicspath{images/}
+
+% clashes with beamer
+%\usepackage[colorlinks=true]{hyperref}
+
+\usepackage{booktabs}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\author{Patrick Sanan}
+\institute[USI Lugano ICS / ETH Z\"{u}rich ERDW] 
+{
+USI Lugano / ETH Z\"{u}rich\\
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{A Git Tutorial} 
+\subtitle[]{What it is, how you use it, and what it's good for}
+\date[]{} 
+% Long date messes up footer
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]
+\titlepage 
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\tableofcontents 
+\end{frame}
+
+\section{Who am I?}
+%% Can start with who the audience is. Specifically, it's the GFD group,
+%%  but more generally it's the class of people who use computers in their work
+%%  but are much more interested in what computers can do for them than how
+%%  computers work. They can use a terminal, and are scientific, but 
+%%  crucially they are NOT interested in cleverness, or hacking, or doing
+%%  something because it's cool.
+
+\section{What is git?}
+%% Give what I just said, it might seem silly that I am going so start with 
+%% a low-level description of what git does. Why? As much as I hate to do it, 
+%% here's the xkcd cartoon.
+
+%% I hated this cartoon when I saw it. Because I love git and think it makes total
+%% sense. But I didn't always. So, let's start with ..
+%%
+%% A false history of version control [based loosely on ``a git parable'' ..
+%% ...
+%% [Along the way, we introduce functinality, which we label as {A},{B}, etc. Later, we show how this is practically manifested in git]
+%% {A} Save labelled versions of your work, so that you can return to it at any time
+
+%% {B} Maintain a 'tree' (better thought of as a DAG)
+
+%% Now we should have a good idea of what git is
+
+\section{How do I use it?}
+%% So how do we use it????
+
+%% 0. Getting it. This is often the hardest part about learning software. Getting it running on your machine.
+%% 
+%% I am going to assume now that you know how to use a terminal to navigate around your local file system [!! Am I going to assume this?? Hmm.. Depends how hands-on I want this to be ..]
+%%
+
+%% Due diligence for the examples
+%% All examples are located at ...
+%% The version of git used was XXX, on this operating system YYY..
+
+%% 1. Working on your own local project
+%%
+%% [Here and elsewhere, we refer back to the abstract things that we set up in the first section]
+%% {A}, saving labelled version of your own work.
+%% ...
+%% {B} As you work, you build up a tree (a linear one for now) 
+%%
+%% How can you see this tree?
+%%%
+
+%% ...
+
+%% Remote tools ..
+
+%% So now that I can use this thing, how will it make my life better? 
+
+%% Wiping out a file completely
+
+\section{What can I do with it?}
+
+%% Working with latex. Here's a .gitignore. Recommendation: put sentences on new lines.
+
+%% Working on code which needs to run on many different machines. 
+
+%% Having a canonical version of something.
+
+%% Free backups and transfers!
+
+%% Coordinating with a team
+
+%% Contributing to a project
+
+
+
+\end{document}
