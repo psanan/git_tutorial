@@ -449,6 +449,45 @@ The Git Book : \href{https://git-scm.com/book}{git-scm.com/book}
 
 \subsection{Remote Tools}
 
+\begin{frame}[fragile]
+\frametitle{Git Remote Repositories}
+You don't really need to worry about the details here if you are using GitHub or BitBucket, as they will guide you. Important facts are
+\begin{itemize}
+\item There are two ways to connect , HTTPS and SSH. The latter will let you use an SSH key, so opt for it when possible.
+\item \textbf{Very Important}: You keep local copies of remote branches in your local repository. For instance, with \lstinline{git branch -a} you might see some branches like this
+\begin{lstlisting}[language=C++]
+$ git branch -a
+ * master
+   remotes/origin/HEAD -> origin/master
+   remotes/origin/master
+\end{lstlisting}
+When you check out a branch 
+
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{}
+The first important point is that the repository that GitHub or BitBucket store is the same as the one on your local machine. The only thing that makes is special is that you tell your local branches about certain ``upstream'' branches, which affect how \lstinline{git fetch}, \lstinline{git pull}, and \lstinline{git fetch} behave.
+
+You can follow updates to a project, browse it, and make comments on the bwebsites.
+
+GitHub and BitBucket include great documentation.
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Setting Up An Account}
+Go to GitHub or BitBucket and follow the instructions. 
+
+It's worthwhile to set up password-free access with SSH keys\footnote{I won't cover this in detail, but ask me if you are having trouble with this}.
+\href{https://confluence.atlassian.com/bitbucket/set-up-ssh-for-git-728138079.html}{https://confluence.atlassian.com/bitbucket/set-up-ssh-for-git-728138079.html}
+\href{https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/}{https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/}
+\end{frame}
+
+
+
 % The basics: setting up a project on bitbucket and github, pushing to it, pulling from it, creating a branch there
 % Pro Tip: SSH keys. This is really worth the hassle - typing in a password all the time is a constant disincentive to push.
 
@@ -528,28 +567,63 @@ http://xkcd.com/1597/
 % GitX, GitK, GitHub, SourceTree, git-gui ..
 % Even MATLAB seems to have some git functionality these days
 
+\begin{frame}[fragile]
+\frametitle{Merging is terrible!!}
+\includegraphics[width=100px]{chimera.jpg}
+\end{frame}
+
+
 % Merges
 %% Pull often
 %% Make commits on contained things
 
-% What's the state??
-%% git status
-%% git diff
-%% git prompt (just give link)
+\begin{frame}[fragile]
+\frametitle{Where am I?}
+% Picture of an empty terminal
+% turn on color
 
-%% Uncommited work when you want to pull
-%% Work on contained commits. Git forces you to work in a more focused way.
-%% You can always reset and amend your commits, so advanced users can just commit things and then undo them.
-%% git stash: dangerous! (but very useful sometimes..)
-This is the only ``dangerous'' thing I will discuss today.
+% Remember useful git commands:
+\begin{itemize}
+\item \lstinline{git status}
+\item \lstinline{git fetch}
+\item \lstinline{git log -10}
+\item \lstinline{git branch -avv} (See \lstinline{git help branch} for the options)
+\item \lstinline{git remote -vv}
+\end{itemize}
+
+% git prompt
+
+% Visualize your project on github/bitbucket or with a GUI tool
+
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Uncommitted changes, need to work on another branch}
+\begin{itemize}
+\item Make contained commits as you work. 
+\item Make a new branch, commit. Assuming you are on the \texttt{master} branch,
+\begin{lstlisting}[language=C++]
+git branch psanan/component-experimental-feature
+git add file1 file2
+git commit 
+git checkout master 
+git pull
+\end{lstlisting}
+\item Stash the changes
 \begin{lstlisting}[language=C++]
 git stash
+git checkout somebody/component-description
+[.. do things ..]
+git checkout master
 git stash apply
-git stash clear
 \end{lstlisting}
-
-
-
-
+This is obviously dangerous because you need to remember where you were. Reserve for when someone comes to your desk asking questions.
+\item Throw away all your changes (\textbf{dangerous: this actually deletes data!})
+\begin{lstlisting}[language=C++]
+git reset --hard HEAD
+\end{lstlisting}
+Again, unlike everything else we've shown today, this actually destroys data.
+\end{itemize}
+\end{frame}
 
 \end{document}
