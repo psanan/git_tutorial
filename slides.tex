@@ -1,4 +1,32 @@
 \documentclass{beamer}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{listings}
+\usepackage{courier}
+\lstset{
+  language=C++,
+  basicstyle=\footnotesize\ttfamily,
+  numberstyle=\tiny,
+  numbersep=5pt,
+  tabsize=2,
+  extendedchars=true,
+  breaklines=true,
+  %frame=b,
+  keywordstyle=\color{red},
+  stringstyle=\color{blue}\ttfamily,
+  commentstyle=\color{greenmod},
+  numberstyle=\color{violet},
+  identifierstyle=\color{orange},
+  showspaces=false,
+  showtabs=false,
+  xleftmargin=17pt,
+  framexleftmargin=17pt,
+  framexrightmargin=5pt,
+  framexbottommargin=4pt,
+  showstringspaces=false
+}
+
+%% Remember: keep this PRACTICAL. How do you literally do all these things?
 
 %% TODO:
 
@@ -160,64 +188,302 @@ USI Lugano / ETH Z\"{u}rich\\
 \tableofcontents 
 \end{frame}
 
-\section{Who am I?}
-%% Can start with who the audience is. Specifically, it's the GFD group,
-%%  but more generally it's the class of people who use computers in their work
-%%  but are much more interested in what computers can do for them than how
-%%  computers work. They can use a terminal, and are scientific, but 
-%%  crucially they are NOT interested in cleverness, or hacking, or doing
-%%  something because it's cool.
+\section{Who is this for?}
+\begin{frame}[fragile]
+\frametitle{}
+Assumptions about the audience:
+\begin{itemize}
+\item You use code
+\item You sometimes feel like you're wasting your time when you work with code, especially when it comes time to collaborate
+\item You know how to use a terminal and login file on your computer \footnote{If not, ask me afterwards}
+\item You don't care much about the inner workings of git, as long as it functions
+\end{itemize}
+\end{frame}
+
+
+% As we proceed, I will use a two examples:
+%1. a toy code that we've been working with.
+% 2. an extremely simple project that we'll start from scratch
+
+% You can find all this material (tracked with git of course), at
+%  bitbucket.org/psanan/gittutorial
+% ?? Actually, move this to github..
+
 
 \section{What is git?}
-%% Give what I just said, it might seem silly that I am going so start with 
-%% a low-level description of what git does. Why? As much as I hate to do it, 
-%% here's the xkcd cartoon.
+\begin{frame}[fragile]
+\frametitle{Why Version Control?}
+git is a \emph{version control system}.
 
-%% I hated this cartoon when I saw it. Because I love git and think it makes total
-%% sense. But I didn't always. So, let's start with ..
-%%
-%% A false history of version control [based loosely on ``a git parable'' ..
-%% ...
-%% [Along the way, we introduce functinality, which we label as {A},{B}, etc. Later, we show how this is practically manifested in git]
-%% {A} Save labelled versions of your work, so that you can return to it at any time
+We will embark on a fictional history of git, a story of how it might have been invented, based on ``a git parable'' by Tom Preston-Warner.
+\end{frame}
 
-%% {B} Maintain a 'tree' (better thought of as a DAG)
+\begin{frame}[fragile]
+\frametitle{Tracking History}
+% Picture here: series of folders
+% "Snapshots"
+\end{frame}
 
-%% Now we should have a good idea of what git is
+\begin{frame}[fragile]
+\frametitle{Adding Metadata}
+% Picture : file in each folder with info
+% "Commits"
+
+% A simple extension is to have a merge commit, which has two parents
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Different Versions}
+% With the commit data above, our history no longer has to be linear:
+% "branches"
+% We can keep track of different branches which point to a commit
+% Picture with branches file
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Other People}
+ Now suppose I want to work on the same code as another person
+% 
+% "repositories" and "remote repositories"
+I define what sort of data is in a \emph{repository}, and how its stored. The key property is that the exact same changes to the data result in identical storage in the repository. 
+
+I also define a \emph{remote repository} which is a reference, in my repository, to another one.
+
+Finally, I introduce tools to merge two branches together.
+
+Now, I can send a branch from my repository to another one, where they can merge it with one of their branches.
+
+I can create a folder which I use to hold your branches. I then merge them with my branches, creating a new commit, and you then in turn fetch my version and merge it with your version. Now, we both have the same version!
+
+% Picture : Two folders, my branches and your remote branches and data. Note that we agreed on the file naming, so I only need to copy over snapshots that I don't have!
+
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{That's it!}
+Git is simply software that, at its core, does all the things we just mentioned, properly implemented:
+\begin{itemize}
+\item Defines data in a \emph{repository}
+\item Records \emph{snapshots} of a set of files
+\item Gives you a way to obtain a copy of the files, edit them, and add your changes as a new snapshot.
+\item Keeps track of \emph{commits} for each snapshot: a summray, who made the changes, when, and from what previous snapshot.
+\item Keeps track of pointers to commits called \emph{branches} and a way to increment them as new commits are added, and a way to merge them.
+\item Keeps track of references to \emph{remote repositories} and provides a way to send and recieve branches to them.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Aside: Differences from other Version Control Systems}
+Some of you may be scarred by previous version control systems.
+\begin{itemize}
+\item It's very easy to set up a repostory and share it.
+\item Git (and Mercurial/Hg) are \emph{distributed version control systems}. There is no need to be in constant contact with a central server, you have a copy of everything on your machine, and branching is cheap
+\item It's hard to lose data with git. You have a complete copy of the history locally. The files in the \texttt{.git} folder are all named with cryptographic hashes, so if they are corrupted, you will find out.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{A Git Repository in Graphical Form}
+% Picture: a tree with two merging branches, master and psanan/feature-update.
+% Have snapshots as things external to the commits, which form the tree, and make sure
+% it's obvious that HEAD and branch names are just pointers into the tree
+
+\end{frame}
+
 
 \section{How do I use it?}
-%% So how do we use it????
+\begin{frame}[fragile]
+\frametitle{How do I use it?}
 
-%% 0. Getting it. This is often the hardest part about learning software. Getting it running on your machine.
-%% 
-%% I am going to assume now that you know how to use a terminal to navigate around your local file system [!! Am I going to assume this?? Hmm.. Depends how hands-on I want this to be ..]
-%%
+\end{frame}
 
+\begin{frame}[fragile]
+\frametitle{Obtaining Git}
+There are many ways to obtain git. 
+You can download a binary from \texttt{git-scm.com}, if you are using Ubuntu, you likely already have it, and if you used MacPorts or Homebrew on OS X you can install it there.
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Setting Git Up}
+To be able to keep track of who made which changes, git needs to know who you are.
+%% Setting it up. You need to tell git who you are. [crib here from Lecture 1 and from git book]
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Creating a Repository}
+From now, we'll start working on a real example. I assume that I have a working \lstinline{git} executable and that I have set up my login file to establish my identity.
+I create a new directory and create a new git repository there:
+\begin{lstlisting}[language=C++]
+mkdir myDemoProject
+cd myDemoProject
+git init
+ls .git
+\end{lstlisting}
+\end{frame}
+(Note: I'll be doing everything from the terminal here, but you can also use various GUI tools to work with git: \texttt{git-scm.com/downloads/guis})
+
+\begin{frame}[fragile]
+\frametitle{Adding and Tracking changes to files}
+\begin{lstlisting}[language=C++]
+vim data.txt
+git status
+git add data.txt
+git status
+git commit
+git log
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Writing Good Commit Messages}
+\begin{verbatim}
+Component: summary
+
+After a blank line, describe what you did. 
+This will be something read later on by you,
+and by other people trying to figure out what
+broke their code. If you did something that could 
+cause problems for someone, note it here. It's
+also a good idea to wrap the lines yourself.
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{What's in a commit?}
+\begin{itemize}
+\item For basic usage, anything you changed since the last time your code worked.
+\item For work in teams or on larger projects,
+\begin{itemize}
+\item Changes related to a particular task on a particular component
+\item Something that is reasonably atomic
+\item Something which won't interfere with other people's work without cause
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Branching}
+By default you are on a branch called \texttt{master}
+\begin{lstlisting}[language=C++]
+git branch psanan/data-reorganize
+git checkout psanan/data-reorganize
+vim data.txt
+git add data.txt
+git commit
+git log
+git checkout master
+vim data.txt
+git log
+\end{lstlisting}
+A good way to name branches is \lstinline{yourname/component-description}.
+\end{frame}
+
+
+% Make sure this text example is also with the files for this presentation
 %% Due diligence for the examples
 %% All examples are located at ...
 %% The version of git used was XXX, on this operating system YYY..
 
-%% 1. Working on your own local project
-%%
-%% [Here and elsewhere, we refer back to the abstract things that we set up in the first section]
-%% {A}, saving labelled version of your own work.
-%% ...
-%% {B} As you work, you build up a tree (a linear one for now) 
-%%
-%% How can you see this tree?
-%%%
 
-%% ...
+% The three areas
+%% While working, it's useful to think of each file (or part of a file) as being in one of three states
+%% Committed, Modified, and Staged
+% We can add a fourth state as untracked
+
+% HEAD?? 
+% You will see this a lot. It's just a pointer to a branch, and a branch is just a pointer to a commit!
+% This points to ``where you are'', what snapshot you are working on in your working directory.
+\begin{lstlisting}[language=C++]
+cat .git/HEAD
+cat .git/refs/heads/master
+\end{lstlisting}
+
+% Making branches
+%% make them often!
+%% Name them like yourname/feature-description
+%%% Important to know who is in charge of a branch, and what it affects
+
+%% Command cheat sheet.
+%%% One of the most common complaints about git is that the command are irritating to remember. With that in mind, here is a small set worth memorizing
+
+% git help
+% git help [command]
+
+% git init . This is so simple that it's worth tracking even the smallest project (track your resume, track your login files, track your homework assignments, ..)
+
+% git status . Your best friend. This allows me to ignore many of the other things I might write on this list!
+
+% git diff [filename] . What have you changed?
+
+% git log -10
+
+% get fetch . An extremely common confusin is related to the fact that you have a LOCAL copy of REMOTE branches on your machine. These are NOT automatically synchronized!
+
+% git pull
+
+% git push
+
+% git push -u remotename branchname
+
+% git commit
+
+% git branch
+
+% git checkout
+
+% git remote -vv
+
+
+% Panic!! What to do if you get into trouble??
+%% Relax. Most things in git are non-destructive. Exceptions: thing you have to ``force'', rebasing, hard resetting.
+%% git status will often tell you how to abort something (say, a merge).
 
 %% Remote tools ..
+
+
+
+\begin{frame}[fragile]
+\frametitle{For More}
+The Git Book : \href{https://git-scm.com/book}{git-scm.com/book}
+\end{frame}
+
+\subsection{Remote Tools}
+
+% The basics: setting up a project on bitbucket and github, pushing to it, pulling from it, creating a branch there
+% Pro Tip: SSH keys. This is really worth the hassle - typing in a password all the time is a constant disincentive to push.
+
+% The two roles of history:
+%% 1. A record of what's happened [never rewrite history!]
+%% 2. A way to organize code development [rewrite history!]
+
+% A rule of thumb to deal with this tension is the following
+%% The typical workflow goes as such:
+%% There is some 'upstream' version of the code (usually the one on github/bitbucket)
+%% One developer wants to do some work
+%% They:
+%% 1. clone the repository, or if they already have it, check out the master branch and run \lstinline{git pull}.
+%% 2. create a new branch \lstinline{git checkout -b psanan}
+%% 3. Do some work. edit edit add commit edit edit add commit edit add commit
+%% 4. Push the branch to the remote repository and track it \lstinline{git push -u origin myname/feature-description}
 
 %% So now that I can use this thing, how will it make my life better? 
 
 %% Wiping out a file completely
 
-\section{What can I do with it?}
+%%%%%%%%%%% DEMO 1 ** split this up!! **
+% We start assuming that git is installed and that you have a login file
+% 0. Set up your login file
+% 1. Create a repo
+% 2. Add some stuff
+% 3. Create an account of github
+% 4. Add an SSH key 
+% 5. Push my project to github
+% 6. Create a branch
+% 7. Push it to github
+% 8. Work on both branches
+% 9. Merge my branches
 
-%% Working with latex. Here's a .gitignore. Recommendation: put sentences on new lines.
+\section{What can I do with it?}
 
 %% Working on code which needs to run on many different machines. 
 
@@ -228,6 +494,61 @@ USI Lugano / ETH Z\"{u}rich\\
 %% Coordinating with a team
 
 %% Contributing to a project
+
+%% Organize your work
+
+%%%%%%%%%%%% DEMO 2
+% The idea here is how to join an existing projec
+% Check out our geophysics code [do on github so I can learn that..]
+%  create our own branch
+% work on it
+% push it
+% Comment on it, tagging other users
+% Merge it
+% Look at the history of a file
+
+\section{Annoyances and Solutions}
+\begin{frame}[fragile]
+\frametitle{How do I remember all these stupid commands?!}
+\includegraphics[width=100px]{git.png}
+http://xkcd.com/1597/
+\end{frame}
+
+% The syntax
+%% People often complain (see git xkcd)
+
+% It's a useful enough tool to justify learning: there are a few commands you will use all the time,
+%  and the rest you can look up
+% git status tells you a lot
+% git help [function] tells you a lot
+% make sure you understand the underlying models. Commits, the staging area, branches, remotes.
+
+% A GUI tool is a useful tool, but it really helps to know the model underlying git
+%  For things like commiting parts of files and reviewing your change sets, these tools are great.
+% GitX, GitK, GitHub, SourceTree, git-gui ..
+% Even MATLAB seems to have some git functionality these days
+
+% Merges
+%% Pull often
+%% Make commits on contained things
+
+% What's the state??
+%% git status
+%% git diff
+%% git prompt (just give link)
+
+%% Uncommited work when you want to pull
+%% Work on contained commits. Git forces you to work in a more focused way.
+%% You can always reset and amend your commits, so advanced users can just commit things and then undo them.
+%% git stash: dangerous! (but very useful sometimes..)
+This is the only ``dangerous'' thing I will discuss today.
+\begin{lstlisting}[language=C++]
+git stash
+git stash apply
+git stash clear
+\end{lstlisting}
+
+
 
 
 
