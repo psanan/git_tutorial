@@ -25,6 +25,11 @@
   framexbottommargin=4pt,
   showstringspaces=false
 }
+\usepackage{xcolor}
+\usepackage{color}
+\usepackage{amsmath}
+
+\definecolor{greenmod}{rgb}{0,0.6,0}
 
 %% Remember: keep this PRACTICAL. How do you literally do all these things?
 
@@ -143,7 +148,7 @@
   \end{centering}
 }
 \AtBeginSection{\frame{\sectionpage}}
-%\AtBeginSubsection{\frame{\subsectionpage}}
+\AtBeginSubsection{\frame{\subsectionpage}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -159,9 +164,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \author{Patrick Sanan}
-\institute[USI Lugano ICS / ETH Z\"{u}rich ERDW] 
+\institute[USI/ETHZ] 
 {
-USI Lugano / ETH Z\"{u}rich\\
+USI Lugano ICS / ETH Z\"{u}rich ERDW\\
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -195,11 +200,11 @@ Assumptions about the audience:
 \begin{itemize}
 \item You use code
 \item You sometimes feel like you're wasting your time when you work with code, especially when it comes time to collaborate
-\item You know how to use a terminal and login file on your computer \footnote{If not, ask me afterwards}
+\item You know how to use a terminal, terminal-based text editor, and login file on your computer \footnote{If not, ask me afterwards}
 \item You don't care much about the inner workings of git, as long as it functions
 \end{itemize}
+\uncover<2>{ \includegraphics[width=50px]{antoine.jpg} (or you are Antoine)}
 \end{frame}
-
 
 % As we proceed, I will use a two examples:
 %1. a toy code that we've been working with.
@@ -209,54 +214,97 @@ Assumptions about the audience:
 %  bitbucket.org/psanan/gittutorial
 % ?? Actually, move this to github..
 
-
 \section{What is git?}
 \begin{frame}[fragile]
 \frametitle{Why Version Control?}
-git is a \emph{version control system}.
-
-We will embark on a fictional history of git, a story of how it might have been invented, based on ``a git parable'' by Tom Preston-Warner.
+\begin{itemize}
+\item
+git is a \emph{Version Control System (VCS)}.
+\item 
+We will show how one might invent such a thing.\footnote{based on \href{http://tom.preston-werner.com/2009/05/19/the-git-parable.html}{``The Git Parable'' by Tom Preston-Werner}}
+\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{Tracking History}
-% Picture here: series of folders
-% "Snapshots"
+\frametitle{Tracking History - Snapshots}
+\begin{itemize}
+\item When working on code, it's natural want to save certain states.
+\item You might do this manually, creating folders with different \emph{snapshots} of your data every once in a while.
+\end{itemize}
+\includegraphics[scale=0.4]{snapshot1.png}\\
+\vspace{10px}
+\includegraphics[scale=0.4]{snapshot2.png}
+
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{Adding Metadata}
-% Picture : file in each folder with info
-% "Commits"
+\frametitle{Adding Metadata - Commits}
+\begin{itemize}
+\item I might decide that I want more information about each snapshot
+\item I introduce data in a new folder of \emph{commits} 
+\item I want to be able to ``rewind'', so I record a \emph{parent} commit for each commit (except the first)
+\end{itemize}
+\includegraphics[scale=0.4]{commit1.png}\\
+\end{frame}
 
-% A simple extension is to have a merge commit, which has two parents
+\begin{frame}[fragile]
+\frametitle{Adding Metadata - Commits}
+\begin{itemize}
+\item I also introduce a new file called \texttt{HEAD} which points to the latest commit
+To save my state,
+\begin{enumerate}
+\item Copy the state indicated by \texttt{HEAD} to a \emph{staging area} and pick some or all of the changes from my \emph{working directory} to add there
+\item Copy the staging area directory to a new snapshot
+\item Create a new commit, using \texttt{HEAD} as the parent and pointing to my new snapshot
+\item Update \texttt{HEAD} to the new commit
+\end{enumerate}
+\end{itemize}
+\includegraphics[scale=0.4]{commit2.png}
 \end{frame}
 
 \begin{frame}[fragile]
 \frametitle{Different Versions}
-% With the commit data above, our history no longer has to be linear:
-% "branches"
-% We can keep track of different branches which point to a commit
-% Picture with branches file
+\begin{itemize}
+\item We can keep track of multiple version of our project by adding more \emph{references} and updating them. 
+\item We change \texttt{HEAD} to now point to one of these \emph{branches}
+\end{itemize}
+\includegraphics[scale=0.4]{branch1.png}\\
+\vspace{10px}
+\includegraphics[scale=0.4]{branch2.png}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Different Versions}
+\begin{itemize}
+\item We realize that we can have multiple parents in a commit, which allows us to \emph{merge} branches.
+\includegraphics[scale=0.4]{branch3.png}
+\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
 \frametitle{Other People}
- Now suppose I want to work on the same code as another person
-% 
-% "repositories" and "remote repositories"
-I define what sort of data is in a \emph{repository}, and how its stored. The key property is that the exact same changes to the data result in identical storage in the repository. 
+\begin{itemize}
+\item Now, suppose you and I both have a copy of this \emph{repository} and want to collaborate
+\item We have the clever idea that we can name the files by applying a function\footnote{a \emph{cryptographic hash function}} to their contents. Now, if we have files with the same names, we have the same data.
+\end{itemize}
+\includegraphics[scale=0.4]{remote1.png}\\
+\vspace{10px}
+\end{frame}
 
-I also define a \emph{remote repository} which is a reference, in my repository, to another one.
-
-Finally, I introduce tools to merge two branches together.
-
-Now, I can send a branch from my repository to another one, where they can merge it with one of their branches.
-
-I can create a folder which I use to hold your branches. I then merge them with my branches, creating a new commit, and you then in turn fetch my version and merge it with your version. Now, we both have the same version!
-
-% Picture : Two folders, my branches and your remote branches and data. Note that we agreed on the file naming, so I only need to copy over snapshots that I don't have!
-
+\begin{frame}[fragile]
+\frametitle{Other People}
+\begin{itemize}
+\item I keep a special set of \emph{remote references} to branches which correspond to your repository
+\item When I want your changes from a branch
+\begin{itemize}
+\item You send me the reference to your version of the branch.
+\item I look at the reference and ask for any files (commits and snapshots) that I am missing.
+\item I can make a merge commit as before. 
+\item I can then send you my reference and you can repeat the steps so that we are synchronized.
+\end{itemize}
+\end{itemize}
+\includegraphics[scale=0.4]{remote2.png}
+\vspace{10px}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -266,9 +314,9 @@ Git is simply software that, at its core, does all the things we just mentioned,
 \item Defines data in a \emph{repository}
 \item Records \emph{snapshots} of a set of files
 \item Gives you a way to obtain a copy of the files, edit them, and add your changes as a new snapshot.
-\item Keeps track of \emph{commits} for each snapshot: a summray, who made the changes, when, and from what previous snapshot.
-\item Keeps track of pointers to commits called \emph{branches} and a way to increment them as new commits are added, and a way to merge them.
-\item Keeps track of references to \emph{remote repositories} and provides a way to send and recieve branches to them.
+\item Keeps track of \emph{commits} for each snapshot: a summary, who made the changes, when, and from what previous snapshot.
+\item Keeps track of pointers to commits called \emph{branches} and provides a way to increment them, as new commits are added, and a way to merge them.
+\item Keeps track of references to \emph{remote repositories} and provides a way to send and recieve repository data.
 \end{itemize}
 \end{frame}
 
@@ -276,27 +324,38 @@ Git is simply software that, at its core, does all the things we just mentioned,
 \frametitle{Aside: Differences from other Version Control Systems}
 Some of you may be scarred by previous version control systems.
 \begin{itemize}
-\item It's very easy to set up a repostory and share it.
-\item Git (and Mercurial/Hg) are \emph{distributed version control systems}. There is no need to be in constant contact with a central server, you have a copy of everything on your machine, and branching is cheap
-\item It's hard to lose data with git. You have a complete copy of the history locally. The files in the \texttt{.git} folder are all named with cryptographic hashes, so if they are corrupted, you will find out.
+\item It's very easy to set up a repository and share it.
+\item Git (and Mercurial/Hg) are \emph{Distributed Version Control Systems}. 
+\begin{itemize}
+\item There is no need to be in constant contact with a central server
+\item You have a copy of everything on your machine
+\item Branching is cheap
+\end{itemize}
+\item It's hard to lose data with git. 
+\begin{itemize}
+\item
+You have a complete copy of the history locally. 
+\item The files in the \texttt{.git} folder are all named with cryptographic hashes, so if they are corrupted, you will find out.
+\end{itemize}
 \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
 \frametitle{A Git Repository in Graphical Form}
-% Picture: a tree with two merging branches, master and psanan/feature-update.
-% Have snapshots as things external to the commits, which form the tree, and make sure
-% it's obvious that HEAD and branch names are just pointers into the tree
-
+\begin{itemize}
+\item Git repositories are commonly drawn as ``trees'' (more precisely, Directed Acyclic Graphs (DAGs).
+\item A commit is a node and edges pointing to its parent(s). 
+\item A branch is a box which points to a commit
+\item \texttt{HEAD} is a box which points to a branch
+\item Merges are commits with exactly two parents
+\item (Aside: You can also use \lstinline{git label} to add fixed references to important commits)
+\end{itemize}
+Let's draw one on the board..
 \end{frame}
-
 
 \section{How do I use it?}
-\begin{frame}[fragile]
-\frametitle{How do I use it?}
 
-\end{frame}
-
+\subsection{Basic Usage}
 \begin{frame}[fragile]
 \frametitle{Obtaining Git}
 There are many ways to obtain git. 
@@ -307,23 +366,40 @@ You can download a binary from \texttt{git-scm.com}, if you are using Ubuntu, yo
 \frametitle{Setting Git Up}
 To be able to keep track of who made which changes, git needs to know who you are.
 %% Setting it up. You need to tell git who you are. [crib here from Lecture 1 and from git book]
+The best way to do this is to tell git these things each time you log into a terminal.
+In addition to your name and email address, I recommend you turn on colors and set your favorite text editor to edit commit messages.
+\begin{lstlisting}[language=]
+git config --global user.name "Patrick Sanan"
+git config --global user.email "patrick.sanan@erdw.ethz.ch"
+git config --global color.status auto
+git config --global color.branch auto 
+git config --global core.editor vim
+\end{lstlisting}
 \end{frame}
 
 \begin{frame}[fragile]
 \frametitle{Creating a Repository}
-From now, we'll start working on a real example. I assume that I have a working \lstinline{git} executable and that I have set up my login file to establish my identity.
-I create a new directory and create a new git repository there:
+\begin{itemize}
+\item From now, we'll start working on a real example. 
+\item I assume that I have a working \lstinline{git} executable and that I have set up my login file to establish my identity.
+\item I create a new directory and create a new git repository there:
 \begin{lstlisting}[language=C++]
 mkdir myDemoProject
 cd myDemoProject
 git init
-ls .git
 \end{lstlisting}
+\item Data is created in the \lstinline{.git} directory. Never change anything in this directory.
+\item (I'll be doing everything from the terminal here, but you can also use various GUI tools to work with git: \texttt{git-scm.com/downloads/guis})
+\end{itemize}
 \end{frame}
-(Note: I'll be doing everything from the terminal here, but you can also use various GUI tools to work with git: \texttt{git-scm.com/downloads/guis})
 
 \begin{frame}[fragile]
 \frametitle{Adding and Tracking changes to files}
+\begin{itemize}
+\item The \lstinline{git add} command moves files to the staging area.
+\item \lstinline{git commit} creates a new snapshot from staging area, creates a new commit, and updates the branch reference.
+\item \lstinline{git status} lets you know the current state.
+\item Try the following (use your favorite editor instead of vim)
 \begin{lstlisting}[language=C++]
 vim data.txt
 git status
@@ -332,6 +408,7 @@ git status
 git commit
 git log
 \end{lstlisting}
+\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -363,7 +440,12 @@ also a good idea to wrap the lines yourself.
 
 \begin{frame}[fragile]
 \frametitle{Branching}
-By default you are on a branch called \texttt{master}
+\begin{itemize}
+\item By default you are on a branch called \texttt{master}
+\item Create branches with \lstinline{git branch new-branch-name}
+\item A good way to name branches is \lstinline{yourname/component-description}.
+\item \emph{checkout} a branch with \lstinline{git checkout}. This means update \texttt{HEAD} to point to the branch, and update the working directory to the snapshot indicated by the branch.
+\item Try:
 \begin{lstlisting}[language=C++]
 git branch psanan/data-reorganize
 git checkout psanan/data-reorganize
@@ -375,85 +457,87 @@ git checkout master
 vim data.txt
 git log
 \end{lstlisting}
-A good way to name branches is \lstinline{yourname/component-description}.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{States of Files}
+It's worth reiterating the different states that files can be in.
+\begin{itemize}
+\item \lstinline{git status} will tell you about the states of files
+\item They can be unmodified from the current snapshot
+\item They can have unstaged changes
+\item They can have staged changes staged (note that you can stage parts of files)
+\item They can be untracked
+\item (They can be also be ignored if you defined a special \texttt{.gitignore} file)
+\end{itemize}
 \end{frame}
 
 
-% Make sure this text example is also with the files for this presentation
-%% Due diligence for the examples
-%% All examples are located at ...
-%% The version of git used was XXX, on this operating system YYY..
-
-
-% The three areas
-%% While working, it's useful to think of each file (or part of a file) as being in one of three states
-%% Committed, Modified, and Staged
-% We can add a fourth state as untracked
-
-% HEAD?? 
-% You will see this a lot. It's just a pointer to a branch, and a branch is just a pointer to a commit!
-% This points to ``where you are'', what snapshot you are working on in your working directory.
-\begin{lstlisting}[language=C++]
-cat .git/HEAD
-cat .git/refs/heads/master
-\end{lstlisting}
-
-% Making branches
-%% make them often!
-%% Name them like yourname/feature-description
-%%% Important to know who is in charge of a branch, and what it affects
-
-%% Command cheat sheet.
-%%% One of the most common complaints about git is that the command are irritating to remember. With that in mind, here is a small set worth memorizing
-
-% git help
-% git help [command]
-
-% git init . This is so simple that it's worth tracking even the smallest project (track your resume, track your login files, track your homework assignments, ..)
-
-% git status . Your best friend. This allows me to ignore many of the other things I might write on this list!
-
-% git diff [filename] . What have you changed?
-
-% git log -10
-
-% get fetch . An extremely common confusin is related to the fact that you have a LOCAL copy of REMOTE branches on your machine. These are NOT automatically synchronized!
-
-% git pull
-
-% git push
-
-% git push -u remotename branchname
-
-% git commit
-
-% git branch
-
-% git checkout
-
-% git remote -vv
+\begin{frame}[fragile]
+\frametitle{The Most Important Commands}
+There are many commands in git. These are some more handy ones
+\begin{itemize}
+\item \lstinline{git help}
+\item \lstinline{git diff [filename]} (what's changed?)
+\item \lstinline{git log [-10]} (see 10 commits worth of history)
+\item \lstinline{git branch -avv} (see ALL branches)
+\end{itemize}
+\end{frame}
 
 
 % Panic!! What to do if you get into trouble??
 %% Relax. Most things in git are non-destructive. Exceptions: thing you have to ``force'', rebasing, hard resetting.
 %% git status will often tell you how to abort something (say, a merge).
 
-%% Remote tools ..
-
-
 
 \begin{frame}[fragile]
 \frametitle{For More}
-The Git Book : \href{https://git-scm.com/book}{git-scm.com/book}
+The Git Book : free at \href{https://git-scm.com/book}{git-scm.com/book} \\
+\includegraphics[width=100px]{progit2}
 \end{frame}
 
-\subsection{Remote Tools}
+\subsection{Remote Repositories and Tools}
 
 \begin{frame}[fragile]
-\frametitle{Git Remote Repositories}
-You don't really need to worry about the details here if you are using GitHub or BitBucket, as they will guide you. Important facts are
+\frametitle{Getting a Copy of an existing project}
 \begin{itemize}
+\item
+The most common way to start working on a git project is to make a copy of someone else's project on GitHub on BitBucket with \lstinline{git clone}
+\item You only need to know the address of the repository
+\begin{lstlisting}[language=C++]
+git clone git@bitbucket.org:psanan/gittutorial
+\end{lstlisting}
+\item This creates a new local repository as a copy of the remote repository.
+\item To simple obtain code with git, this is all you need to know.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Remote Basics (1/2)}
+\begin{itemize}
+\item
+You can define \emph{remote} repositories with the \lstinline{git remote add <name> <address>}.
 \item There are two ways to connect , HTTPS and SSH. The latter will let you use an SSH key, so opt for it when possible.
+\item You can have references to branches on these repositories
+\item you can tell your local branches to \emph{track} remote branches. The remote branch is defined as the \emph{upstream} branch.
+\item This is set up for you with the \lstinline{master} branch when you use \lstinline{git clone} to obtain a remote repository.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Remote Basics (2/2)}
+\begin{itemize}
+\item \lstinline{git fetch updates your local copy of the remote branch corresponding to your current branch}
+\item \lstinline{git pull} calls \lstinline{git fetch} and also merges the remote branch into yours.
+\item \lstinline{git push} sends your local branch to be merged with the remote branch.
+\item \lstinline{git push -u <remotename> <branchname>} is a shortcut to push a new branch to the remote and track it.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{An Extremely Common Mistake}
+\begin{itemize}
 \item \textbf{Very Important}: You keep local copies of remote branches in your local repository. For instance, with \lstinline{git branch -a} you might see some branches like this
 \begin{lstlisting}[language=C++]
 $ git branch -a
@@ -461,15 +545,19 @@ $ git branch -a
    remotes/origin/HEAD -> origin/master
    remotes/origin/master
 \end{lstlisting}
-When you check out a branch 
-
+When you check out a branch that is tracking a remote branch, you will see something like this:
+\begin{lstlisting}[language=C++]
+$ git checkout master
+Switched to branch 'master'
+Your branch is up-to-date with 'origin/master'.
+\end{lstlisting}
+This does \textbf{NOT} mean that your branch is up to date with the remoter branch! It means that your branch is up to date with the local copy of that branch, named \lstinline{origin/master} here.
+If you want to make sure you are really up to date, you must call \lstinline{git fetch}
 \end{itemize}
-
 \end{frame}
 
-
 \begin{frame}[fragile]
-\frametitle{}
+\frametitle{BitBucket and GitHub}
 The first important point is that the repository that GitHub or BitBucket store is the same as the one on your local machine. The only thing that makes is special is that you tell your local branches about certain ``upstream'' branches, which affect how \lstinline{git fetch}, \lstinline{git pull}, and \lstinline{git fetch} behave.
 
 You can follow updates to a project, browse it, and make comments on the bwebsites.
@@ -484,73 +572,99 @@ Go to GitHub or BitBucket and follow the instructions.
 It's worthwhile to set up password-free access with SSH keys\footnote{I won't cover this in detail, but ask me if you are having trouble with this}.
 \href{https://confluence.atlassian.com/bitbucket/set-up-ssh-for-git-728138079.html}{https://confluence.atlassian.com/bitbucket/set-up-ssh-for-git-728138079.html}
 \href{https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/}{https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/}
+
+BitBucket or GitHub? You can sign up for both. For all but the most advanced users, the two services are essentially the same. 
+
+GitHub is usually considered to be the bigger dog, with more users.
+
+Currently, BitBucket will give you much more for free if you sign up with an academic email address.
 \end{frame}
 
+\begin{frame}[fragile]
+\frametitle{Putting your Project on Github or Bitbucket}
+Follow the instructions on the site.
+\begin{itemize}
+\item With the website interface, create a git repository on the remote server
+\item Tell your local repo the address
+\item Tell all your local branches to track new remote branches on this remote server
+\end{itemize}
 
+Let's do this now for our demo project.
 
-% The basics: setting up a project on bitbucket and github, pushing to it, pulling from it, creating a branch there
-% Pro Tip: SSH keys. This is really worth the hassle - typing in a password all the time is a constant disincentive to push.
+\end{frame}
 
-% The two roles of history:
-%% 1. A record of what's happened [never rewrite history!]
-%% 2. A way to organize code development [rewrite history!]
+\begin{frame}[fragile]
+\frametitle{To Rewrite or not to Rewrite?}
+We won't go into any of the details of how to do it here, but you can rewrite your git history.
 
-% A rule of thumb to deal with this tension is the following
-%% The typical workflow goes as such:
-%% There is some 'upstream' version of the code (usually the one on github/bitbucket)
-%% One developer wants to do some work
-%% They:
-%% 1. clone the repository, or if they already have it, check out the master branch and run \lstinline{git pull}.
-%% 2. create a new branch \lstinline{git checkout -b psanan}
-%% 3. Do some work. edit edit add commit edit edit add commit edit add commit
-%% 4. Push the branch to the remote repository and track it \lstinline{git push -u origin myname/feature-description}
+An important rule is once another person is tracking a branch, do NOT rewrite the history of that branch. 
 
-%% So now that I can use this thing, how will it make my life better? 
+Tension arises because git history serves two, sometimes competing, purposes:
+\begin{enumerate}
+\item Record history so you can go back (never rewrite!)
+\item Organize code development into logical commits (rewrite!)
+\end{enumerate}
 
-%% Wiping out a file completely
+A good rule is to approach the history of your personal branches with the second mentality, but 
+approach shared branches with the first.
 
-%%%%%%%%%%% DEMO 1 ** split this up!! **
-% We start assuming that git is installed and that you have a login file
-% 0. Set up your login file
-% 1. Create a repo
-% 2. Add some stuff
-% 3. Create an account of github
-% 4. Add an SSH key 
-% 5. Push my project to github
-% 6. Create a branch
-% 7. Push it to github
-% 8. Work on both branches
-% 9. Merge my branches
+\end{frame}
 
-\section{What can I do with it?}
+\subsection{Demo: Joining a project}
 
-%% Working on code which needs to run on many different machines. 
+\begin{frame}[fragile]
+\frametitle{}
+Fortunately, the workflow for joining an existing project hosted on GitHub or BitBucket is very simple!
+Let's perform a typical example:
+\begin{lstlisting}[language=C++]
+git clone https://github.com/psanan/gittutorial-demo.git
+cd gittutorial-demo
+git branch psanan/helloworld
+git checkout psanan/helloworld
+vim hello.c
+git add hello.c
+vim README.md
+git add README.md
+git status
+git commit
+git push -u origin psanan/helloworld
+git checkout master
+vim README.md
+git add README.md
+git commit
+git merge psanan/helloworld
+git push
+\end{lstlisting}
+And let's take a look on GitHub
+\end{frame}
 
-%% Having a canonical version of something.
-
-%% Free backups and transfers!
-
-%% Coordinating with a team
-
-%% Contributing to a project
-
-%% Organize your work
-
-%%%%%%%%%%%% DEMO 2
-% The idea here is how to join an existing projec
-% Check out our geophysics code [do on github so I can learn that..]
-%  create our own branch
-% work on it
-% push it
-% Comment on it, tagging other users
-% Merge it
-% Look at the history of a file
+\section{More selling points}
+\begin{frame}[fragile]
+\frametitle{Selling Points}
+\begin{itemize}
+\item A way to accidentally lose a lot less data
+\item A handy way of dealing with code which you commonly use on multiple machines (laptop, desktop, local cluster, supercomputer)
+\item A way to have a canonical version of code (on GitHub or BitBucket)
+\item Some added peace of mind that your code is backed up
+\item An easy way to share your project
+\item An easy way to join or use other projects
+\item A nice way to organize your work
+\item A good way to efficiently work with remote collaborators on code (or a paper)
+\end{itemize}
+\end{frame}
 
 \section{Annoyances and Solutions}
 \begin{frame}[fragile]
 \frametitle{How do I remember all these stupid commands?!}
 \includegraphics[width=100px]{git.png}
 http://xkcd.com/1597/
+\begin{itemize}
+\item \lstinline{git status} gives you hints
+\item \lstinline{git help [command]} gives you the arbitrary command line flags
+\item You can use a GUI tool if you would like. Ther is a built-in one, \lstinline{git gui}, and many other options:
+\href{git-scm.com/downloads/guis}{git-scm.com/downloads/guis}
+\end{itemize}
+
 \end{frame}
 
 % The syntax
@@ -625,5 +739,14 @@ git reset --hard HEAD
 Again, unlike everything else we've shown today, this actually destroys data.
 \end{itemize}
 \end{frame}
+
+\begin{frame}[fragile]
+\frametitle{}
+The End. \\
+
+
+
+\end{frame}
+
 
 \end{document}
