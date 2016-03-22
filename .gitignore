@@ -1,1 +1,8 @@
 .*.swp
+*.vrb 
+*.aux 
+*.log 
+*.toc 
+*.snm 
+*.out 
+*.nav
