@@ -14,7 +14,7 @@
   %frame=b,
   keywordstyle=\color{red},
   stringstyle=\color{blue}\ttfamily,
-  commentstyle=\color{greenmod},
+  %t@github.com:psanan/gittutorial-demo.gitcommentstyle=\color{greenmod},
   numberstyle=\color{violet},
   identifierstyle=\color{orange},
   showspaces=false,
@@ -78,7 +78,7 @@
 \author{Patrick Sanan}
 \institute[USI/ETHZ] 
 {
-USI Lugano ICS / ETH Z\"{u}rich ERDW\\
+USI Lugano ICS / ETH Z\"{u}rich D-ERDW\\
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -110,7 +110,7 @@ USI Lugano ICS / ETH Z\"{u}rich ERDW\\
 
 \section{Who is this for?}
 \begin{frame}[fragile]
-\frametitle{}
+\frametitle{Assumed Audience}
 Assumptions about the audience:
 \begin{itemize}
 \item You use code
@@ -120,21 +120,24 @@ Assumptions about the audience:
 \uncover<2>{ \includegraphics[width=50px]{antoine.jpg} (or you are Antoine)}
 \end{frame}
 
-% As we proceed, I will use a two examples:
-%1. a toy code that we've been working with.
-% 2. an extremely simple project that we'll start from scratch
-
-% You can find all this material (tracked with git of course), at
-%  bitbucket.org/psanan/gittutorial
-% ?? Actually, move this to github..
+\begin{frame}[fragile]
+\frametitle{Purpose of this Presentation}
+\begin{itemize}
+\item Give an idea of the fairly simple (beautiful) data structure which git manipulates
+\item Give an introduction to the (less beautiful) way you can interact with this from the command line
+\item Show some of the benefits of using services like Bitbucket or GitHub
+\item Give a few very simple demonstrations
+\item Hopefully, convince you that these tools are worth investing the time to learn more thoroughly
+\end{itemize}
+\end{frame}
 
 \section{What is git?}
 \begin{frame}[fragile]
-\frametitle{Why Version Control?}
+\frametitle{What is Version Control?}
 \begin{itemize}
 \item
 git is a \emph{Version Control System (VCS)}
-\item It's a system to help you keep track of the history and versions of a project, usually one based on some sort of source code.
+\item It's a system to help you keep track of the history and versions of a ``project'' (usually based on source code)
 \item 
 We will show how one might invent such a thing.\footnote{based on \href{http://tom.preston-werner.com/2009/05/19/the-git-parable.html}{``The Git Parable'' by Tom Preston-Werner}}
 \end{itemize}
@@ -143,7 +146,7 @@ We will show how one might invent such a thing.\footnote{based on \href{http://t
 \begin{frame}[fragile]
 \frametitle{Tracking History - Snapshots}
 \begin{itemize}
-\item When working on code, it's natural want to save certain states.
+\item When working on code, it's natural to want to save certain states.
 \item You might do this manually, creating folders with different \emph{snapshots} of your data every once in a while.
 \end{itemize}
 \includegraphics[scale=0.4]{snapshot1.png}\\
@@ -200,7 +203,7 @@ We will show how one might invent such a thing.\footnote{based on \href{http://t
 \begin{frame}[fragile]
 \frametitle{Other People}
 \begin{itemize}
-\item Now, suppose you and I both have a copy of this \emph{repository} and want to collaborate
+\item Now, suppose you and I both have a copy of this \emph{repository} (\texttt{MyProject}) and we want to collaborate.
 \item We have the clever idea that we can name the files by applying a function\footnote{a \emph{cryptographic hash function}} to their contents. Now, if we have files with the same names, we have the same data.
 \end{itemize}
 \includegraphics[scale=0.4]{remote1.png}\\
@@ -219,7 +222,7 @@ We will show how one might invent such a thing.\footnote{based on \href{http://t
 \item I can then send you my reference and you can repeat the steps so that we are synchronized.
 \end{itemize}
 \end{itemize}
-\includegraphics[scale=0.4]{remote2.png}
+\includegraphics[scale=0.3]{remote2.png}
 \vspace{10px}
 \end{frame}
 
@@ -231,7 +234,7 @@ Git is simply software that, at its core, does all the things we just mentioned,
 \item Records \emph{snapshots} of a set of files
 \item Gives you a way to obtain a copy of the files, edit them, and add your changes as a new snapshot.
 \item Keeps track of \emph{commits} for each snapshot: a summary, who made the changes, when, and from what previous snapshot.
-\item Keeps track of pointers to commits called \emph{branches} and provides a way to increment them, as new commits are added, and a way to merge them.
+\item Keeps track \emph{branches}, which are pointers to commits. It provides a way to increment them, as new commits are added, and a way to merge them.
 \item Keeps track of references to \emph{remote repositories} and provides a way to send and recieve repository data.
 \end{itemize}
 \end{frame}
@@ -240,18 +243,19 @@ Git is simply software that, at its core, does all the things we just mentioned,
 \frametitle{Aside: Differences from other Version Control Systems}
 Some of you may be scarred by previous version control systems.
 \begin{itemize}
-\item It's very easy to set up a repository and share it.
+\item It's very easy to set up a repository and share it with git.
 \item Git (and Mercurial/Hg) are \emph{Distributed Version Control Systems}. 
 \begin{itemize}
 \item There is no need to be in constant contact with a central server
 \item You have a copy of everything on your machine
-\item Branching is cheap
+\item Branching is cheap (just pointers)
 \end{itemize}
 \item It's hard to lose data with git. 
 \begin{itemize}
 \item
 You have a complete copy of the history locally. 
 \item The files in the \texttt{.git} folder are all named with cryptographic hashes, so if they are corrupted, you will find out.
+\item ``Get out what you put in''.
 \end{itemize}
 \end{itemize}
 \end{frame}
@@ -295,7 +299,7 @@ brew install git
 \item
 To be able to keep track of who made which changes, git needs to know who you are.
 \item 
-A way to do this is to tell git these things each time you log into a terminal, by calling the \lstinline{git config} command. For instance, add command to your \lstinline{~/.bashrc} file.
+A way to do this is to tell git these things each time you log into a terminal, by calling the \lstinline{git config} command. For instance, add commands to your \lstinline{~/.bashrc} file.
 \item 
 In addition to specifying your name and email address, I recommend you turn on colors and set your favorite text editor to edit commit messages.
 \begin{lstlisting}[language=]
@@ -320,7 +324,7 @@ cd myDemoProject
 git init
 \end{lstlisting}
 \item Data is created in the \lstinline{.git} directory. Never change anything in this directory.
-\item (I'll be doing everything from the terminal here, but you can also use various GUI tools to work with git: \texttt{git-scm.com/downloads/guis})
+\item (I'll be doing everything from the terminal here, but you can also use \href{https://git-scm.com/downloads/guis}{various GUI tools} to work with git)
 \end{itemize}
 \end{frame}
 
@@ -339,6 +343,7 @@ git status
 git commit
 git log
 \end{lstlisting}
+\item (If you only want a short commit message, you can use \lstinline{git commit -m"Component: summary"})
 \end{itemize}
 \end{frame}
 
@@ -388,6 +393,7 @@ git checkout master
 vim data.txt
 git log
 \end{lstlisting}
+\item Common mistake: committing onto the wrong branch. Check with \lstinline{git branch} (or better yet use the git prompt mentioned later)
 \end{itemize}
 \end{frame}
 
@@ -427,15 +433,15 @@ git log
 
 \begin{frame}[fragile]
 \frametitle{States of Files}
-It's worth reiterating the different states that files can be in.
+It's worth reiterating the different states that files in your working directory can be in.
 \begin{itemize}
-\item \lstinline{git status} will tell you about the states of files
-\item They can be unmodified from the current snapshot
+\item They can be unmodified from the current snapshot (determined by \texttt{HEAD})
 \item They can have unstaged changes
-\item They can have staged changes staged (note that you can stage parts of files)
+\item They can have staged changes (it is possible to stage parts of files)
 \item They can be untracked
-\item (They can be also be ignored if you defined a special \texttt{.gitignore} file)
+\item (They can be also be ignored if you create a special \texttt{.gitignore} file)
 \end{itemize}
+\item \lstinline{git status} will tell you about the states of files
 \end{frame}
 
 \begin{frame}[fragile]
@@ -458,7 +464,7 @@ Some more handy ones
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{For More}
+\frametitle{For (Much) More}
 The Git Book : free at \href{https://git-scm.com/book}{git-scm.com/book} \\
 \includegraphics[width=100px]{progit2}
 \end{frame}
@@ -489,8 +495,8 @@ You can define remote repositories (\emph{remotes}) with \lstinline{git remote a
 \item There are two types of addresses you can use, HTTPS and SSH. The latter will let you use an SSH key for password-free usage.
 \item When you use \lstinline{git clone}, a remote is automatically created for you with the name \texttt{origin}.
 \item You can have references to copies of branches on remote repositories
-\item you can tell your local branches to \emph{track} remote branches. The remote branch is defined as the \emph{upstream} branch.
-\item This is set up for you with the \lstinline{master} branch when you use \lstinline{git clone} to obtain a remote repository.
+\item you can tell your local branches to \emph{track} remote branches. The remote branch is referred to as the \emph{upstream} branch.
+\item This is set up for you for the \lstinline{master} branch when you use \lstinline{git clone} to obtain a remote repository.
 \end{itemize}
 \end{frame}
 
@@ -526,67 +532,94 @@ If you want to make sure you are really up to date, you must call \lstinline{git
 
 \begin{frame}[fragile]
 \frametitle{Bitbucket and GitHub}
-
 \begin{itemize}
-\item These (freemium) services host remote git repositories for you. These repositories are essentially the same as your local ones.
+\item These (freemium) services host remote git repositories for you. 
+\item For both open and closed source code.
+\item These repositories are essentially the same as your local ones.
 \item Nice graphical overviews of your project and interactive web tools.
+\includegraphics[scale=0.15]{bitbucket2}
+\includegraphics[scale=0.15]{bitbucket3}
+\item Lots of documentation, very stable, many many users.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Bitbucket and GitHub}
+\begin{itemize}
 \item Comment directly on commits and code lines (easy code review)
 \includegraphics[scale=0.3]{bitbucket1}
-\item Sign up for email notification when commits are pushed (fantastic for remote collaborations)
-\item Easily share your code, get it from anywhere, make it public when you want to.
-\item Lots of documentation, very stable, many many users.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Bitbucket and GitHub}
+\begin{itemize}
+\item You can receive and respond to these messages in your email program.\\
+\includegraphics[scale=0.3]{bitbucket5}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Bitbucket and GitHub}
+\begin{itemize}
+\item Sign up for email notification when commits are pushed, fantastic for remote collaborations. 
+\item This is currently easier on Bitbucket than GitHub.\\
+\includegraphics[scale=0.3]{bitbucket4}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Bitbucket and GitHub}
+\begin{itemize}
+\item Easily share your code, get it from anywhere, make it public when you want to. \\
+\includegraphics[scale=0.3]{github1}
 \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
 \frametitle{Setting Up An Account}
 \begin{itemize}
-\item Go to \href{https://bitbucket.org}{bitbucket.org} or \href{https://github.com}{github.com} and follow the instructions.
-\item If you hate typing passwords as much as I do, it's worthwhile to set up password-free access with SSH keys\footnote{I won't cover this in detail, but ask me if you are having trouble with this} on
-\href{https://confluence.atlassian.com/bitbucket/set-up-ssh-for-git-728138079.html}{bitbucket} and
-\href{https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/}{GitHub}.
-\item bitbucket vs. GitHub? Similar in most ways.
+\item Bitbucket vs. GitHub? Similar in most ways, but
 \begin{itemize}
 \item
-GitHub is usually considered to be the bigger dog, with more overall users and more of a sense of communicty.
-\item 
-Currently, bitbucket will give you much more for free if you sign up with an academic email address.
+GitHub
+\begin{itemize}
+\item
+is usually considered the bigger dog, with more overall users and more of a sense of community. 
+\item is becoming the standard for large, open-source projects.
 \end{itemize}
+\item Bitbucket 
+\begin{itemize}
+\item will give you much more for free (unlimited private repositories) if you \textbf{sign up with an academic email address}. 
+\item is my personal choice for most of my work.
+\end{itemize}
+\end{itemize}
+\item Go to \href{https://bitbucket.org}{bitbucket.org} or \href{https://github.com}{github.com} and follow the instructions.
+\item If you hate typing passwords as much as I do, it's worthwhile to set up password-free access with SSH keys\footnote{I won't cover this in detail, but ask me if you are having trouble with this} on
+\href{https://confluence.atlassian.com/bitbucket/set-up-ssh-for-git-728138079.html}{Bitbucket} and
+\href{https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/}{GitHub}.
 \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{Putting your Project on Github or Bitbucket}
+\frametitle{Putting your Project on GitHub or Bitbucket}
 Follow the instructions on the site.
 \begin{itemize}
 \item With the website interface, create a git repository on the remote server
-\item Tell your local repo the address
+\item Tell your local repository about the address
 \begin{lstlisting}[language=]
 git remote add origin git@bitbucket.org:psanan/myproject.git
 \end{lstlisting}
-\item Tell all your local branches to track new remote branches on this remote server
+\item Tell some or all your local branches to track new remote branches on this remote server
 \begin{lstlisting}[language=C++]
+git push -u origin master
 git push -u origin --all
 \end{lstlisting}
 \end{itemize}
 
 Let's do this now for our demo project.
 
-\end{frame}
-
-\begin{frame}[fragile]
-\frametitle{Aside: To Rewrite or not to Rewrite?}
-\begin{itemize}
-\item
-We won't go into any of the details, but you can rewrite git history (change, delete, or rearrange commits instead of just adding them)
-\item If you do this you won't be able to push to a remote repository unless you supply the ``force'' \lstinline{-f} flag. This destroys data. \textbf{When first starting out, never do this}.
-\item As you use git more, tension arises because git history serves two, sometimes competing, purposes:
-\begin{enumerate}
-\item Record history so you can go back (never rewrite!)
-\item Organize code development into logical commits (rewrite!)
-\end{enumerate}
-\item As a rule of thumb, never rewrite history on a branch if another person has a copy of it, but rewrite your own branches if desired so that they are more easily reviewed.
-\end{itemize}
 \end{frame}
 
 \subsection{Demo: Joining a project}
@@ -596,7 +629,7 @@ We won't go into any of the details, but you can rewrite git history (change, de
 Fortunately, the workflow for joining an existing project hosted on GitHub or bitbucket is very simple!
 Let's perform a typical example:
 \begin{lstlisting}[language=C++]
-git clone https://github.com/psanan/gittutorial-demo.git
+git clone git@github.com:psanan/gittutorial-demo.git
 cd gittutorial-demo
 git branch psanan/helloworld
 git checkout psanan/helloworld
@@ -636,15 +669,24 @@ And let's take a look on GitHub
 \begin{frame}[fragile]
 \frametitle{How do I remember all these stupid commands?!}
 \begin{columns}
-\column{0.5\textwidth}
+\column{0.6\textwidth}
 \begin{itemize}
 \item \lstinline{git help}
 \item \lstinline{git status} gives you hints
-\item \lstinline{git help [command]} gives you the arbitrary command line flags
-\item You can use a GUI tool if you would like. There is a built-in one, \lstinline{git gui}, and many other options:
+\item \lstinline{git help [command]} gives you the arbitrary sub-commands and flags
+\item A GUI tool can be helpful.
+\begin{itemize}
+\item Built-in: 
+\begin{itemize}
+\item
+\lstinline{git gui} (construct commits) 
+\item \lstinline{gitk} (see the graph)
+\end{itemize}
+\item Many other options:
 \href{ https://git-scm.com/downloads/guis}{http://git-scm.com/downloads/guis}
 \end{itemize}
-\column{0.5\textwidth}
+\end{itemize}
+\column{0.4\textwidth}
 \includegraphics[width=120px]{git.png}\\
 {\tiny \href{http://xkcd.com/1597/}{http://xkcd.com/1597/}}
 \end{columns}
@@ -652,9 +694,10 @@ And let's take a look on GitHub
 
 \begin{frame}[fragile]
 \frametitle{Merging is terrible!!}
+\includegraphics[width=70px]{chimera.jpg}
 \begin{itemize}
-\item Yes it is, sometimes, but hopefully it is slightly less painful with git.
-\item Git cannot make assumptions about your data.
+\item Yes. It's fundamentally difficult. Often it will ``just work'' with git.
+\item Git cannot make many assumptions about your data.
 \item Try to make contained commits so that conflicts are localized.
 \item Don't let branches diverge too much. If working on a branch based on \texttt{master} for a long time, periodically merge \texttt{master} in.
 \begin{lstlisting}[language=C++]
@@ -667,12 +710,11 @@ git merge master
 [ .. work work commit commit ..]
 \end{lstlisting}
 \item \lstinline{git status} will give you hints (like how to abort a merge).
-\includegraphics[width=70px]{chimera.jpg}
 \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{Where am I?}
+\frametitle{Where am I?? What's going on??}
 \includegraphics[width=100px]{term}\scalebox{3}{???}
 \begin{itemize}
 \item Turn on colors (see setup earlier)
@@ -680,13 +722,14 @@ git merge master
 Remember useful git commands:
 \begin{itemize}
 \item \lstinline{git status}
+\item \lstinline{git diff [filename]}
 \item \lstinline{git fetch}
 \item \lstinline{git log -10}
 \item \lstinline{git branch -avv} (See \lstinline{git help branch} for the options)
 \item \lstinline{git remote -vv}
 \end{itemize}
-\item Use a \href{https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh}{terminal prompt which shows git status}\footnote{google ``git prompt'' which should bring up a commonly-used script called \texttt{git-prompt.sh}}.
-\item Visualize your project with a GUI tool or with bitbucket/GitHub
+\item Use a \href{https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh}{terminal prompt which shows git status}\footnote{follow link or google ``git prompt'' which should bring up a commonly-used script called \texttt{git-prompt.sh}}.
+\item Visualize your project with a GUI tool or with Bitbucket/GitHub
 \end{itemize}
 \end{frame}
 
@@ -719,14 +762,14 @@ git stash apply
 
 For More Help:
 \begin{itemize}
-\item This presentation: \href{https://bitbucket.org/psanan/gittutorial}{https://bitbucket.org/psanan/gittutorial}. 
+\item This presentation: \href{https://bitbucket.org/psanan/gittutorial}{https://bitbucket.org/psanan/gittutorial}
 \item
 The Git Book: \href{https://git-scm.com/book}{git-scm.com/book}
 \item 
-Tutorials on GitHub and bitbucket
+Tutorials on GitHub and Bitbucket
 \item 
 Beware \href{www.stackoverflow.com}{StackOverflow}: do not panic and start pasting mysterious commands, and note that a lot of the advice is specific to old versions of git.
-\item \href{mailto:patrick.sanan@erdw.ethz.ch}{patrick.sanan@erdw.ethz.ch} (or gchat, or come to my office, H23)
+\item \href{mailto:patrick.sanan@erdw.ethz.ch}{patrick.sanan@erdw.ethz.ch} (or gchat, or skype, or come to my office [H23])
 \end{itemize}
 \vspace{50px}
 {\tiny ``... git actually has a simple design, with stable and reasonably well-documented data structures. 
