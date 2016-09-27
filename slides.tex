@@ -2,7 +2,7 @@
 \usepackage{algorithm}
 \usepackage[noend]{algpseudocode}
 \usepackage{listings}
-\usepackage{courier}
+%\usepackage{courier}
 \usepackage{xcolor}
 \definecolor{verylightgray}{gray}{0.95}
 \definecolor{somewhatdarkgray}{gray}{0.3}
@@ -355,7 +355,7 @@ git log
 
 \begin{frame}[fragile]
 \frametitle{Writing Good Commit Messages}
-\begin{verbatim}
+\begin{lstlisting}
 Component: summary
 
 After a blank line, describe what you did. 
@@ -364,7 +364,7 @@ and by other people trying to figure out what
 broke their code. If you did something that could 
 cause problems for someone, note it here. It's
 also a good idea to wrap the lines yourself.
-\end{verbatim}
+\end{lstlisting}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -386,8 +386,8 @@ also a good idea to wrap the lines yourself.
 \item By default you are on a branch called \texttt{master}
 \item Create branches with \lstinline{git branch new-branch-name}
 \item A good way to name branches is \lstinline{yourname/component-description}.
-\item \emph{checkout} a branch with \lstinline{git checkout}. This means update \texttt{HEAD} to point to the branch, and update the working directory to the snapshot indicated by the branch.
-\item Try:
+\item \emph{Check out} a branch with \lstinline{git checkout}: update \texttt{HEAD} to point to the branch, update the working directory to the snapshot indicated by the branch.
+\item 
 \begin{lstlisting}
 git branch psanan/data-reorganize
 git checkout psanan/data-reorganize
@@ -768,7 +768,7 @@ git stash apply
 For More Help:
 \begin{itemize}
 \item This presentation: \href{https://bitbucket.org/psanan/gittutorial}{https://bitbucket.org/psanan/gittutorial}
-\item 2015 USI course with additional Git material: \href{https://bitbucket.org/psanan/SEFCS2015}{Software Engineering for Computational Science}
+\item 2015 USI course with additional Git material: \href{https://bitbucket.org/psanan/sefcs2015}{Software Engineering for Computational Science}
 \item
 The Git Book: \href{https://git-scm.com/book}{git-scm.com/book}
 \item 
