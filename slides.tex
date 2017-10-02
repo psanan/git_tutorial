@@ -80,7 +80,7 @@
 \institute[USI/ETHZ]
 {
 USI Lugano ICS / ETH Z\"{u}rich D-ERDW\\
- \href{mailto:patrick.sanan@usi.ch}{patrick.sanan@usi.ch}, \href{mailto:patrick.sanan@erdw.ethz.ch}{patrick.sanan@erdw.ethz.ch}
+\href{mailto:patrick.sanan@usi.ch}{patrick.sanan@usi.ch}, \href{mailto:patrick.sanan@erdw.ethz.ch}{patrick.sanan@erdw.ethz.ch}
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -118,6 +118,7 @@ Assumptions about the audience:
 \item You use code
 \item You sometimes feel like you're wasting your time when you work with code, especially when it comes time to collaborate
 \item You know how to use a terminal, shell, terminal-based text editor, and login file on your computer
+\item You don't feel that (short) git tutorials you find online give you sufficient understanding
 \end{itemize}
 \end{frame}
 
@@ -383,7 +384,7 @@ also a good idea to wrap the lines yourself.
 \item A good way to name branches is \lstinline{yourname/component-description}.
 \item \emph{Check out} a branch with \lstinline{git checkout}: update \texttt{HEAD} to point to the branch, update the working directory to the snapshot indicated by the branch.
 \item
-\begin{lstlisting}[language=C++]
+\begin{lstlisting}[language=]
 git branch psanan/data-reorganize
 git checkout psanan/data-reorganize
 vim data.txt
@@ -479,7 +480,7 @@ The Git Book : free at \href{https://git-scm.com/book}{git-scm.com/book} \\
 The most common way to start working on a git project
 \item Make a copy of a project on GitHub or Bitbucket (or somewhere else) with \lstinline{git clone}
 \item You only need to know the address of the repository. You can copy it from a GitHub or Bitbucket page.
-\begin{lstlisting}[language=C++]
+\begin{lstlisting}[language=]
 git clone git@bitbucket.org:psanan/gittutorial.git
 \end{lstlisting}
 \item You may have to enter your username and password

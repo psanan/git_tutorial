@@ -78,10 +78,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \author{Patrick Sanan}
-\institute[ETHZ]
-{
-ETH Z\"{u}rich D-ERDW\\
-}
+%\institute[ETHZ]
+%{
+%ETH Z\"{u}rich D-ERDW\\
+%}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -120,7 +120,7 @@ Assumptions about the audience:
 \end{itemize}
 \end{frame}
 
-\section{More Helpful Options}
+\section{More Helpful Tools}
 \begin{frame}[fragile]
 \frametitle{Helpful git commands and options}
 \begin{itemize}
@@ -147,31 +147,6 @@ Assumptions about the audience:
 \end{itemize}
 \end{frame}
 
-\section{Helper Scripts}
-\begin{frame}[fragile]
-\frametitle{Helpful Scripts to use with Git}
-%The git repository for git has extras: \texttt{https://github.com/git/git/tree/master/contrib/}
-%\begin{itemize}
-%\item It is very helpful to add git information to your git prompt
-%\begin{itemize}
-%\item \texttt{completion/git-prompt.sh}
-%\item \lstinline{source} this in your login scripts.
-%\begin{lstlisting}[language=bash]
-%source $PDSRC_ROOT/git-prompt.sh
-%GIT_PS1_SHOWUPSTREAM=true
-%GIT_PS1_SHOWDIRTYSTATE=true
-%GIT_PS1_SHOWSTASHSTATE=true
-%PS1='\[\e[1;31m\][\[\e[0;33m\]\H: \[\e[1;31m\]\W\[\e[0;36m\]$(__git_ps1 " (%s)")\[\e[1;31m\]]\$\[\e[0m\] '
-%\end{lstlisting}
-%\item Don't forget to include \lstinline{\[ \]} around non-printing characters in your \lstinline{PS1} string.
-%\end{itemize}
-%\item Another time-saver is git autocomplete
-%\begin{itemize}
-%\item \texttt{completion/git-completion.bash}
-%\end{itemize}
-%\end{itemize}
-\end{frame}
-
 \begin{frame}[fragile]
 \frametitle{.gitignore}
 \begin{itemize}
@@ -182,6 +157,9 @@ Assumptions about the audience:
 \item Git will ignore any files listed in \lstinline{.gitignore}
 \item Subdirectories can have their own \lstinline{.gitignore}
 \item It has a sophisticated set of syntax options
+\begin{lstlisting}[language=]
+git help gitignore
+\end{lstlisting}
 \end{itemize}
 \end{frame}
 
@@ -242,6 +220,33 @@ a3d0cd08 (Patrick Sanan     2015-11-11 14:18:15 +0100   2)
 \end{itemize}
 \end{frame}
 
+\section{Helper Scripts}
+\begin{frame}[fragile]
+\frametitle{Helpful Scripts to use with Git}
+The git repository for git has extras: \texttt{https://github.com/git/git/tree/master/contrib/}
+\begin{itemize}
+\item It is very helpful to add git information to your git prompt
+\begin{itemize}
+\item \texttt{completion/git-prompt.sh}
+\item \lstinline{source} this in your login scripts.
+\begin{lstlisting}[language=bash]
+source $PDSRC_ROOT/git-prompt.sh
+GIT_PS1_SHOWUPSTREAM=true
+GIT_PS1_SHOWDIRTYSTATE=true
+GIT_PS1_SHOWSTASHSTATE=true
+PS1='\[\e[1;31m\][\[\e[0;33m\]\H: \[\e[1;31m\]\W\[\e[0;36m\]$(__git_ps1 " (%s)")\[\e[1;31m\]]\$\[\e[0m\] '
+\end{lstlisting}
+\item Don't forget to include \lstinline{\[ \]} around non-printing characters in your \lstinline{PS1} string.
+\end{itemize}
+\item Another time-saver is git autocomplete
+\begin{itemize}
+\item \texttt{completion/git-completion.bash}
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Dangerous Git}
@@ -265,7 +270,7 @@ However, you will need these dangerous operations, so it is a great idea to lear
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{Dangerous Git (from previous lecture)}
+\frametitle{Dangerous Git Commands: Overview}
 \begin{itemize}
 \item Fixing your last commit:
 \begin{itemize}
@@ -286,6 +291,7 @@ However, you will need these dangerous operations, so it is a great idea to lear
 \begin{itemize}
 \item git rebase -i
 \end{itemize}
+\item ...
 \end{itemize}
 \end{frame}
 
@@ -319,7 +325,7 @@ However, you will need these dangerous operations, so it is a great idea to lear
 \begin{frame}[fragile]
 \frametitle{Amending}
 \begin{itemize}
-\item \lstinline{git commit --amend} allows you to change the last commit. This changes its SHA (since it now describes a different state), so avoid doing this if you have pushed to a remote.
+\item \lstinline{git commit --amend} allows you to change the last commit. This changes its name (since it now describes a different state), so avoid doing this if you have pushed to a remote.
 \item Useful is \lstinline{git commit --amend --no-edit} if you forgot to add a file, made a typo, or otherwise don't want to edit the commit message.
 \end{itemize}
 \end{frame}
@@ -331,7 +337,7 @@ However, you will need these dangerous operations, so it is a great idea to lear
 \begin{itemize}
 \item Many snapshots described by commits. The latest of these is pointed to (via a branch) by \texttt{HEAD}
 \item A state on your working directory
-\item A state in the staging area (the index)
+\item A state in the staging area (the \emph{index})
 \end{itemize}
 \item \lstinline{git checkout} takes the state defined by a commit (or a branch or other ref pointing there), makes \lstinline{point} there, and copies it to the working directory, clearing the staging area (making the index be identical to the state in \lstinline{HEAD})
 \end{itemize}
@@ -356,7 +362,11 @@ However, you will need these dangerous operations, so it is a great idea to lear
 \begin{lstlisting}[language=C++]
 git reset HEAD~5 file1
 \end{lstlisting}
-\item Note that without the last argument, \lstinline{git reset} is the opposite of \lstinline{git add}, unstaging any changes.
+\item Note that if you reset a file to the state in \texttt{HEAD} (the default), \lstinline{git reset} is the opposite of \lstinline{git add}, unstaging any changes.
+\begin{lstlisting}
+git reset file1      # unstage any changes to file1
+git reset HEAD file1 # the same
+\end{lstlisting}
 \end{itemize}
 \end{frame}
 
@@ -386,7 +396,7 @@ git reset HEAD~5 file1
 \item How do I make one commit into two?
 \item \texttt{edit} that commit
 \item \lstinline{reset HEAD^}
-\item Now make two separate commits
+\item Now make two separate commits (don't forgot to re-add new files!)
 \item Proceed with \lstinline{git rebase --continue}
 \item Don't forget \lstinline{git add -i} and \lstinline{git gui} if you need to add only some of the changes to a given file.
 \end{itemize}
@@ -395,7 +405,7 @@ git reset HEAD~5 file1
 \begin{frame}[fragile]
 \frametitle{General Rebasing}
 \begin{itemize}
-\item We have seen rebasing as a way to replay commit and edit them
+\item We have seen rebasing as a way to replay commits and edit them
 \item Commits can also be replayed onto another point in the tree
 \item This creates new commits, and may require manual resolution of conflicts
 \begin{itemize}
