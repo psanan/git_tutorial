@@ -1,0 +1,604 @@
+\documentclass{beamer}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{courier}
+\usepackage{listings}
+\usepackage{xcolor}
+\definecolor{verylightgray}{gray}{0.95}
+\definecolor{somewhatdarkgray}{gray}{0.3}
+\lstset{
+  language=,
+  basicstyle=\footnotesize\ttfamily,
+  numberstyle=\tiny,
+  numbersep=5pt,
+  tabsize=2,
+  extendedchars=true,
+  breaklines=true,
+  keywordstyle=\color{red},
+  stringstyle=\color{blue}\ttfamily,
+  numberstyle=\color{violet},
+  showspaces=false,
+  showtabs=false,
+  showstringspaces=false,
+  backgroundcolor=\color{verylightgray},
+  frame=single,
+  framexleftmargin=3px,
+  framexrightmargin=3px,
+  rulecolor=\color{lightgray},
+  basewidth=0.5em,                % For consistent spacing with inline listings
+  columns=flexible,               % For copy-pasting
+}
+\usepackage{color}
+\usepackage{amsmath}
+
+\definecolor{greenmod}{rgb}{0,0.6,0}
+
+\hypersetup{linkcolor=magenta,colorlinks=true}
+
+\usetheme{Madrid}
+\setbeamertemplate{navigation symbols}{} % Remove the navigation symbols
+\setbeamertemplate{sections/subsections in toc}[default] %Turn off ugly toc numbering
+\setbeamertemplate{itemize subitem}[triangle]
+\setbeamertemplate{itemize item}[triangle]
+\setbeamertemplate{enumerate items}[default]
+%\setbeamercovered{transparent}
+\usepackage{appendixnumberbeamer}
+\defbeamertemplate{section page}{customsection}[1][]{%
+  \begin{centering}
+    {\usebeamerfont{section name}\usebeamercolor[fg]{section name}#1}
+    \vskip1em\par
+    \begin{beamercolorbox}[sep=12pt,center]{part title}
+      \usebeamerfont{section title}\insertsection\par
+    \end{beamercolorbox}
+  \end{centering}
+}
+\defbeamertemplate{subsection page}{customsubsection}[1][]{%
+  \begin{centering}
+    {\usebeamerfont{subsection name}\usebeamercolor[fg]{subsection name}#1}
+    \vskip1em\par
+    \begin{beamercolorbox}[sep=8pt,center,#1]{part title}
+      \usebeamerfont{subsection title}\insertsubsection\par
+    \end{beamercolorbox}
+  \end{centering}
+}
+\AtBeginSection{\frame{\sectionpage}}
+\AtBeginSubsection{\frame{\subsectionpage}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\graphicspath{images/}
+
+% clashes with beamer
+%\usepackage[colorlinks=true]{hyperref}
+
+\usepackage{booktabs}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\author{Patrick Sanan}
+\institute[ETHZ]
+{
+ETH Z\"{u}rich D-ERDW\\
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{A Git Tutorial: More Topics}
+\subtitle[]{}
+\date[]{}
+% Long date messes up footer
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]
+\titlepage
+\begin{center}
+\href{https://bitbucket.org/psanan/gittutorial}{https://bitbucket.org/psanan/gittutorial}
+\end{center}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\tableofcontents
+\end{frame}
+
+\section{Who is this for?}
+\begin{frame}[fragile]
+\frametitle{Assumed Audience}
+Assumptions about the audience:
+\begin{itemize}
+\item You have seen and understood the first part of this tutorial
+\item You are interested in some additional information about git
+\end{itemize}
+\end{frame}
+
+\section{More Helpful Options}
+\begin{frame}[fragile]
+\frametitle{Helpful git commands and options}
+\begin{itemize}
+\item \lstinline{git status}
+\begin{itemize}
+\item \lstinline{git status --short}
+\item \lstinline{git status --untracked=no}
+\end{itemize}
+\item \lstinline{git log}
+\begin{itemize}
+\item \lstinline{git log -10}
+\item \lstinline{git log --graph}
+\item \lstinline{git log --pretty=oneline}
+\item \lstinline{git log --pretty=format"%h - %an, %ar : %s"}
+\item For more, see ``Pretty Formats'' in \lstinline{git help log}
+\end{itemize}
+\item \lstinline{git diff}
+\begin{itemize}
+\item \lstinline{git diff file.ext}
+\item \lstinline{git diff a7869c2} , \lstinline{git diff a7869c2 file.ext}
+\item \lstinline{git diff --staged}
+\item \lstinline{git difftool} [one of the few times that a GUI is perhaps worth it]
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\section{Helper Scripts}
+\begin{frame}[fragile]
+\frametitle{Helpful Scripts to use with Git}
+%The git repository for git has extras: \texttt{https://github.com/git/git/tree/master/contrib/}
+%\begin{itemize}
+%\item It is very helpful to add git information to your git prompt
+%\begin{itemize}
+%\item \texttt{completion/git-prompt.sh}
+%\item \lstinline{source} this in your login scripts.
+%\begin{lstlisting}[language=bash]
+%source $PDSRC_ROOT/git-prompt.sh
+%GIT_PS1_SHOWUPSTREAM=true
+%GIT_PS1_SHOWDIRTYSTATE=true
+%GIT_PS1_SHOWSTASHSTATE=true
+%PS1='\[\e[1;31m\][\[\e[0;33m\]\H: \[\e[1;31m\]\W\[\e[0;36m\]$(__git_ps1 " (%s)")\[\e[1;31m\]]\$\[\e[0m\] '
+%\end{lstlisting}
+%\item Don't forget to include \lstinline{\[ \]} around non-printing characters in your \lstinline{PS1} string.
+%\end{itemize}
+%\item Another time-saver is git autocomplete
+%\begin{itemize}
+%\item \texttt{completion/git-completion.bash}
+%\end{itemize}
+%\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{.gitignore}
+\begin{itemize}
+\item You often want to mark certain files as ineligible for commits
+\item Temporary files (\lstinline{*.DS_store},\lstinline{.*.swp})
+\item Objects and executables
+\item Large files
+\item Git will ignore any files listed in \lstinline{.gitignore}
+\item Subdirectories can have their own \lstinline{.gitignore}
+\item It has a sophisticated set of syntax options
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Git Bisect}
+\begin{itemize}
+\item As pointed out before, having a (quickly verified) ``good'' state and a (quickly verified) ``bad'' state, with respect to a given problem you would like to repair, is a position of enormous strength.
+\item You can find out which is the first ``bad'' commit by running $\lceil \log_2{N} \rceil$ tests, where $N$ is the number of commit between a known ``good'' commit and a known ``bad'' commit.
+\item \lstinline{git bisect} allows specifiying commits as good or bad, until the first bad commit is identified
+\begin{lstlisting}[language=C++,
+basicstyle=\tiny\ttfamily]
+git bisect start
+git bisect bad
+git bisect good 28490a89
+...
+git bisect good
+...
+git bisect bad
+...
+eb694f0286c957aa9e303b194cad8b622547e825 is the first bad commit
+...
+git bisect reset
+\end{lstlisting}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Git Bisect, continued}
+\begin{itemize}
+\item Also try \lstinline{git bisect log}
+\item You can move \lstinline{HEAD} around during a bisection, say if one commit represents a non-working state.
+\begin{lstlisting}[language=C++]
+git reset HEAD~2
+\end{lstlisting}
+\item \lstinline{git bisect skip} attempts to do this automatically (choosing a nearby commit)
+\item You can limit to commits which affect certain paths
+\begin{lstlisting}[language=C++]
+git bisect start -- some/path some/other/path
+\end{lstlisting}
+\item You can even automate the tests with \lstinline{git bisect run test_exec args}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Git Blame}
+\begin{itemize}
+\item Sometimes you want to know who introduced a change.
+\item Git blame tells you who last touched each line of a file
+\begin{lstlisting}[language=bash,
+basicstyle=\tiny\ttfamily]
+git blame Lecture11.tex
+a3d0cd08 (Patrick Sanan     2015-11-11 14:18:15 +0100   1) \input{"../templates/Lecture.tex.inc"}
+a3d0cd08 (Patrick Sanan     2015-11-11 14:18:15 +0100   2)
+35459acc (Patrick Sanan     2015-11-11 16:40:18 +0100   3) \title[CEFCS Week 11]{Software Engineering for Computational Science: Week 11}
+...
+\end{lstlisting}
+\item Combined with regression tests that give line numbers with errors, this is powerful.
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Dangerous Git}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]
+\frametitle{Dangerous Git}
+What makes some operations dangerous?
+\begin{itemize}
+\item Might not be undoable at all (deleting untracked files)
+\item Might not be undoable trivially (complicated rebasing)
+\item Might actually destroy information (prune, gc)
+\item Might rewrite history, hence require a forced push to a remote
+\item Might require you to remember something (git stash)
+\end{itemize}
+However, you will need these dangerous operations, so it is a great idea to learn about them now, when you are calm and rested. Know what they do to the data git stores, and you won't ruin anything by blindly entering commands.
+\begin{itemize}
+\item As a rule of thumb, be careful with operations which require \texttt{--hard} or \texttt{-f} flags, and check the documentation for \texttt{-n} or \texttt{--dry-run} flags which can let you see what damage you might do.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Dangerous Git (from previous lecture)}
+\begin{itemize}
+\item Fixing your last commit:
+\begin{itemize}
+\item git commit --amend
+\item git reset
+\end{itemize}
+\item Cleaning up
+\begin{itemize}
+\item git clean
+\item git branch -D
+\end{itemize}
+\item Moving commits around
+\begin{itemize}
+\item git rebase
+\item git cherry-pick
+\end{itemize}
+\item Rewriting history
+\begin{itemize}
+\item git rebase -i
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{itemize}
+\item Taking a detour
+\begin{itemize}
+\item git stash
+\end{itemize}
+\item Overwriting things on a remote
+\begin{itemize}
+\item git push -f
+\end{itemize}
+\item Reversing a commit
+\begin{itemize}
+\item git revert
+\end{itemize}
+\item Data management
+\begin{itemize}
+\item git filter-branch
+\item git prune
+\item git gc
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Rewriting Branch Histories}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]
+\frametitle{Amending}
+\begin{itemize}
+\item \lstinline{git commit --amend} allows you to change the last commit. This changes its SHA (since it now describes a different state), so avoid doing this if you have pushed to a remote.
+\item Useful is \lstinline{git commit --amend --no-edit} if you forgot to add a file, made a typo, or otherwise don't want to edit the commit message.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Resetting}
+\begin{itemize}
+\item Recall from earlier that git stores many different versions of your project
+\begin{itemize}
+\item Many snapshots described by commits. The latest of these is pointed to (via a branch) by \texttt{HEAD}
+\item A state on your working directory
+\item A state in the staging area (the index)
+\end{itemize}
+\item \lstinline{git checkout} takes the state defined by a commit (or a branch or other ref pointing there), makes \lstinline{point} there, and copies it to the working directory, clearing the staging area (making the index be identical to the state in \lstinline{HEAD})
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Resetting, Cont.}
+\begin{itemize}
+\item \lstinline{git reset} gives you some more options, by making 1-3 changes.
+\item \lstinline{git reset --soft} Simply move the branch pointed to by \lstinline{HEAD}. The index and the working directory are left the same.
+\item Unless you specify \lstinline{--soft}, the index is also updated to match what \lstinline{HEAD} now points to. The information about what you have staged is lost.
+\item \lstinline{git reset --hard} additionally updates the working directory to the same stage as pointed to by \lstinline{HEAD}. This \textbf{destroys information}.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Reset with path}
+\begin{itemize}
+\item You can also \lstinline{reset} individual paths
+\item This always leaves the branch pointed to by \texttt{HEAD} alone, but otherwise behaves the same as \lstinline{git reset}
+\item Stage changes to revert a file by five commits:
+\begin{lstlisting}[language=C++]
+git reset HEAD~5 file1
+\end{lstlisting}
+\item Note that without the last argument, \lstinline{git reset} is the opposite of \lstinline{git add}, unstaging any changes.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Interactive Rebasing}
+\begin{itemize}
+\item The standard way to make changes further back in history
+\item Replays commits one at a time, allowing you to modify them:
+\begin{itemize}
+\item Reorder
+\item Edit commit message
+\item Amend (aka edit)
+\item Squash
+\item Fixup (like squash but throw away commit message)
+\item Skip
+\item Run an arbitrary command
+\end{itemize}
+\item Done with a simple text interface, explained to you by git.
+\item A common workflow is you hack away on your local repo, and when ready to share (or make a pull request) you back up your branch (\lstinline{git branch myhandle/my-backup-branch}) and then perform an interactive rebase onto \lstinline{master} (say), with \lstinline{git rebase -i master}. Now you can combine any small fixes and improve your commit messages. Make sure you still pass your tests!
+% Recall that there are many ways to refer to commits: SHA, short SHA, reflog entriy, HEAD, HEAD^ HEAD~3, etc..
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Splitting a commit}
+\begin{itemize}
+\item How do I make one commit into two?
+\item \texttt{edit} that commit
+\item \lstinline{reset HEAD^}
+\item Now make two separate commits
+\item Proceed with \lstinline{git rebase --continue}
+\item Don't forget \lstinline{git add -i} and \lstinline{git gui} if you need to add only some of the changes to a given file.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{General Rebasing}
+\begin{itemize}
+\item We have seen rebasing as a way to replay commit and edit them
+\item Commits can also be replayed onto another point in the tree
+\item This creates new commits, and may require manual resolution of conflicts
+\begin{itemize}
+\item These are resolved just like the merge conflicts we saw in week 4.
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{The Typical rebase}
+\begin{itemize}
+\item You are working on a local feature branch from \texttt{master}
+\begin{lstlisting}[language=C++]
+git checkout master
+git checkout -b myhandle/my-feature
+...work...
+git add file1 file2
+git commit
+\end{lstlisting}
+\item You would like to get any latest changes from master. One way is a merge
+\begin{lstlisting}[language=C++]
+git fetch
+git merge master
+\end{lstlisting}
+This works fine but introduces a merge commit, which some workflows discourage
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{The Typical Rebase, Cont.}
+\begin{itemize}
+\item An alternative, \textbf{if} no one else depends on your feature branch, is to simply replay your commits on top of the new \texttt{master}
+\begin{lstlisting}[language=C++]
+git checkout master
+git pull
+git checkout myhandle/my-feature
+git rebase master [myhandle/my-feature]
+\end{lstlisting}
+\item This is in some ways cleaner, but it is a rewrite of history, so should only be used before your branch is used by other people.
+\item How did this work? Git found the common ancestor commit of \texttt{myhandle/my-feature} and \texttt{master}, and played all commits that were on \texttt{myhandle/my-feature} onto \texttt{master}.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{More complex rebases}
+\begin{itemize}
+\item You are not restricted to replay commits from the point of common ancestry
+\item Suppose, as is common, you are working on \texttt{myhandle/my-feature} and you make another branch
+\begin{lstlisting}[language=C++]
+git checkout -b myhandle/my-feature-sub-feature
+\end{lstlisting}
+\item Later, I decide that I want the changes from \texttt{myhandle/my-feature-sub-feature} only to be rebased onto \texttt{master}
+\item git allows this with the \lstinline{--onto} flag with \lstinline{git rebase}
+\begin{lstlisting}[language=C++]
+git rebase --onto master myhandle/my-feature myhandle/my-feature-sub-feature
+\end{lstlisting}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{rerere}
+\begin{itemize}
+\item Problem: one often needs to resolve the same merge conflicts many times
+\begin{itemize}
+\item Merging \texttt{master} into topic branches
+\end{itemize}
+\item A solution : remember information on past merges
+\item \textbf{Re}use \textbf{Re}corded \textbf{Re}solution
+\item \lstinline{git rerere} is usually not used directly by the user, but it's important to understand that it's there when doing complicated merges.
+\item Records conflicted merge files (with \texttt{<<<<<<<} etc. in them) and a set of resolved files.
+\item See \texttt{git help rerere} if you ever need to tell git to forget some of this information.
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Deleting Things}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[fragile]
+\frametitle{\texttt{git clean}}
+\begin{itemize}
+\item Sometimes you want to remove untracked files - \lstinline{git clean} does this
+\item Some useful flags
+\begin{itemize}
+\item \lstinline{-x} : delete things ignored by \texttt{.gitignore}
+\item \lstinline{-X} : delete only things ignored by \texttt{.gitignore}
+\item \lstinline{-d}: also delete untracked directories
+\item \lstinline{-f} : required by default, for safety (unless you do an interactive clean or dry run)
+\end{itemize}
+\item Best practices: run \lstinline{git clean -n} to do a dry run. This allows you to make sure you are going to delete exactly what you want to
+\item \lstinline{git stash} is related, but allows you to reapply what you have removed.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Deleting branches}
+\begin{itemize}
+\item Branches can be deleted with \lstinline{git branch -d}
+\item If deleting the branch would orphan commits (the branch hasn't been merged into another branch) then you must use \lstinline{git branch -D} (and remember \lstinline{git reflog} if you decide this was an accident)
+\item To delete a remote branch, push it with the \texttt{--delete} option, or with \lstinline{:}
+\begin{lstlisting}[language=C++]
+git push --delete origin/psanan/mybranch
+git push :origin/psanan/mybranch
+\end{lstlisting}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Overwriting branches}
+\begin{itemize}
+\item To force a remote branch to match your local one, use \lstinline{git push -f}
+\item To force your local branch to match a remote one, use
+\begin{lstlisting}[language=C++]
+git checkout mybranch
+git fetch myremote
+git reset --hard myremote/mybranch
+\end{lstlisting}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Destroying information}
+\begin{itemize}
+\item Sometimes you specifically want to destroy information in your git repo
+\item Some common reasons:
+\begin{itemize}
+\item You commited a huge file accidentally
+\item You commited a file with sensitive data (passwords, keys, personal information, etc.)
+\item Obviously, as the point is precisely destroy information, it is irreversible, hence dangerous.
+\item Git provides \lstinline{git filter-branch} to do this (and more)
+\item Demo
+\begin{itemize}
+\item Create a new git repo and some commits, including a file with a password in it
+\item To purge this file everywhere, \lstinline{git filter-branch --tree-filter 'rm -f PURGETHISFILE' HEAD}
+\end{itemize}
+\item Use \texttt{-all} to run the filter on all branches
+\item You can make a backup of your branch before doing this, as with a rebase, to test.
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Git revert}
+\begin{itemize}
+\item If you want to undo a commit that you have pushed to a remote repository, how can you avoid rewriting history?
+\item One obvious option is to make changes manually and push a new commit.
+\item \lstinline{git revert} allows you to apply the ``inverse'' of a given commit
+\item Be cautious about doing this with complicated workflows. For more, see \texttt{git-scm.com/2010/03/02/undoing-merges.html}.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Cleaning up the git repository}
+\begin{itemize}
+\item Usually, the fact that git rarely deletes anything is an advantage.
+\item We have already seen how to use \lstinline{git filter-branch} to purge specific files.
+\item However, if you work with a large repository and rebase often, you might end up with a lot of unreachable commits
+\item The tool \lstinline{git gc} (garbage collect) automatically does things like organize pack files and remove old, unreachable commits. Usually this is all you should need to run.
+\item By default, doesn't touch recent entries in the reflog (newer than 90 days, or 30 days for unreachable entries).
+\item You can prune unreachable objects with a different cuttoff with the \lstinline{--prune=<date>} option.
+\item There are more tools, some of which are called by \lstinline{git gc}
+\begin{itemize}
+\item \lstinline{git prune}, \lstinline{git fsck}, \lstinline{git prune-packed}, \lstinline{git repack}, \lstinline{git pack-objects}
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Cherry-picking}
+\begin{itemize}
+\item A quick and easy way to apply the changes introduced by a commit as a new commit to the current branch
+\begin{lstlisting}[language=C++]
+git cherry-pick 132a53
+\end{lstlisting}
+\item Not dangerous in the ways we have been discussing
+\item However, this is a duplication of information
+\item Routine use suggests a confused workflow!
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{The End}
+
+For More Help:
+\begin{itemize}
+\item This presentation: \href{https://bitbucket.org/psanan/gittutorial}{https://bitbucket.org/psanan/gittutorial}
+\item
+The Git Book: \href{https://git-scm.com/book}{git-scm.com/book}
+\item
+Tutorials on GitHub and Bitbucket
+\item
+Beware \href{https://www.stackoverflow.com}{StackOverflow}: do not panic and start pasting mysterious commands, and note that a lot of the advice is specific to old versions of git.
+\item \href{mailto:patrick.sanan@erdw.ethz.ch}{patrick.sanan@erdw.ethz.ch}
+\end{itemize}
+\vspace{50px}
+{\tiny ``... git actually has a simple design, with stable and reasonably well-documented data structures.
+In fact, I'm a huge proponent of designing your code around the data, rather than the other
+way around, and I think it's one of the reasons git has been fairly successful ... I will, in
+fact, claim that the difference between a bad programmer and a good one is whether [he or she]
+considers [his or her] code or [his or her] data structures more important. Bad programmers worry
+about the code. Good programmers worry about data structures and their relationships.''\\
+--\href{http://lwn.net/Articles/193245/}{Linus Torvalds, 2006}
+}
+\end{frame}
+
+\end{document}

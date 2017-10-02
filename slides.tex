@@ -173,7 +173,7 @@ We will show how one might invent such a thing.\footnote{inspired by \href{http:
 \item To save my state,
 \begin{enumerate}
 \item Copy the state indicated by \texttt{HEAD} to a \emph{staging area} and pick some or all of the changes from my \emph{working directory} to add there
-\item Copy the staging area directory to a new snapshot
+\item Move everything from  the staging area directory to a new snapshot
 \item Create a new commit pointing to my new snapshot, using \texttt{HEAD} to define the parent.
 \item Update \texttt{HEAD} to the new commit
 \end{enumerate}
@@ -205,7 +205,7 @@ We will show how one might invent such a thing.\footnote{inspired by \href{http:
 \frametitle{Other People}
 \begin{itemize}
 \item Now, suppose you and I both have a copy of this \emph{repository} (\texttt{MyProject}) and we want to collaborate.
-\item We have the clever idea that we can name the files by applying a function\footnote{a \emph{cryptographic hash function}} to their contents. Now, if we have files with the same names, we have the same data.
+\item We have the clever idea that we can name the files by applying a function\footnote{a \emph{cryptographic hash function}} to their contents. Now, if we have files with the same name if and only if we have the same data \tiny{(with overwhelming probablity)}.
 \end{itemize}
 \includegraphics[scale=0.4]{remote1.png}\\
 \vspace{10px}

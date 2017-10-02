@@ -6,3 +6,5 @@
 *.snm 
 *.out 
 *.nav
+*.fdb_latexmk
+*.fls
