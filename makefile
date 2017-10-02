@@ -3,6 +3,9 @@ slides.pdf : slides.tex
 	pdflatex $<
 
 clean : 
-	rm -f slides.pdf  slides.vrb slides.aux slides.log slides.toc slides.snm slides.out slides.nav
+	rm -f  slides.vrb slides.aux slides.log slides.toc slides.snm slides.out slides.nav
 
-.PHONY : clean
+allclean : clean
+	rm -f slides.pdf
+
+.PHONY : clean allclean

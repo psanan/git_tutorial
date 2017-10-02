@@ -1,7 +1,6 @@
 \documentclass{beamer}
 \usepackage{algorithm}
 \usepackage[noend]{algpseudocode}
-\usepackage{courier}
 \usepackage{listings}
 \usepackage{xcolor}
 \definecolor{verylightgray}{gray}{0.95}
@@ -66,7 +65,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\graphicspath{images/}
+\graphicspath{{./images/}}
 
 % clashes with beamer
 %\usepackage[colorlinks=true]{hyperref}
@@ -81,6 +80,7 @@
 \institute[USI/ETHZ]
 {
 USI Lugano ICS / ETH Z\"{u}rich D-ERDW\\
+ \href{mailto:patrick.sanan@usi.ch}{patrick.sanan@usi.ch}, \href{mailto:patrick.sanan@erdw.ethz.ch}{patrick.sanan@erdw.ethz.ch}
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -117,7 +117,7 @@ Assumptions about the audience:
 \begin{itemize}
 \item You use code
 \item You sometimes feel like you're wasting your time when you work with code, especially when it comes time to collaborate
-\item You know how to use a terminal, shell, terminal-based text editor, and login file on your computer \footnote{If not, ask me afterwards}
+\item You know how to use a terminal, shell, terminal-based text editor, and login file on your computer
 \end{itemize}
 \end{frame}
 
@@ -283,10 +283,10 @@ Let's draw one on the board, and see what happens when we add new commits, inclu
 \frametitle{Obtaining Git}
 There are many ways to obtain git.
 \begin{itemize}
-\item You can download a binary from \texttt{git-scm.com}
+  \item You can download a binary from \href{http://git-scm.com}{git-scm.com}
 \item If you are using Linux, you likely already have it (if not, try \lstinline{sudo apt-get install git}).
 \item You can install git from Macports or Homebrew on OS X.
-\begin{lstlisting}[language=C++]
+\begin{lstlisting}
 sudo port install git
 brew install git
 \end{lstlisting}
@@ -319,7 +319,7 @@ git config --global core.editor vim
 \item From now, we'll start working on a real example.
 \item I assume that I have a working \lstinline{git} executable and that I have set up my login file to establish my identity.
 \item I create a new directory and create a new git repository there:
-\begin{lstlisting}[language=C++]
+\begin{lstlisting}
 mkdir myDemoProject
 cd myDemoProject
 git init
@@ -336,7 +336,7 @@ git init
 \item \lstinline{git commit} creates a new snapshot from staging area, creates a new commit, and updates the branch reference.
 \item \lstinline{git status} lets you know the current state.
 \item Try the following (use your favorite editor instead of vim)
-\begin{lstlisting}[language=C++]
+\begin{lstlisting}
 vim data.txt
 git status
 git add data.txt
@@ -350,7 +350,7 @@ git log
 
 \begin{frame}[fragile]
 \frametitle{Writing Good Commit Messages}
-\begin{verbatim}
+\begin{lstlisting}
 Component: summary
 
 After a blank line, describe what you did.
@@ -359,7 +359,7 @@ and by other people trying to figure out what
 broke their code. If you did something that could
 cause problems for someone, note it here. It's
 also a good idea to wrap the lines yourself.
-\end{verbatim}
+\end{lstlisting}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -381,8 +381,8 @@ also a good idea to wrap the lines yourself.
 \item By default you are on a branch called \texttt{master}
 \item Create branches with \lstinline{git branch new-branch-name}
 \item A good way to name branches is \lstinline{yourname/component-description}.
-\item \emph{check out} a branch with \lstinline{git checkout}. This updates \texttt{HEAD} to point to the branch, and updates the working directory to the snapshot indicated by the branch.
-\item 
+\item \emph{Check out} a branch with \lstinline{git checkout}: update \texttt{HEAD} to point to the branch, update the working directory to the snapshot indicated by the branch.
+\item
 \begin{lstlisting}[language=C++]
 git branch psanan/data-reorganize
 git checkout psanan/data-reorganize
@@ -420,7 +420,7 @@ numIterations = 4;
 \begin{frame}[fragile]
 \frametitle{Resolving Merge Conflicts}
 Let's perform an example with our simple repository.
-\begin{lstlisting}[language=C++]
+\begin{lstlisting}
 git checkout master
 git merge psanan/data-reorganize
 git status
@@ -477,8 +477,8 @@ The Git Book : free at \href{https://git-scm.com/book}{git-scm.com/book} \\
 \begin{itemize}
 \item
 The most common way to start working on a git project
-\item Make a copy of a project on GitHub or bitbucket (or somewhere else) with \lstinline{git clone}
-\item You only need to know the address of the repository. You can copy it from a GitHub or bitbucket page.
+\item Make a copy of a project on GitHub or Bitbucket (or somewhere else) with \lstinline{git clone}
+\item You only need to know the address of the repository. You can copy it from a GitHub or Bitbucket page.
 \begin{lstlisting}[language=C++]
 git clone git@bitbucket.org:psanan/gittutorial.git
 \end{lstlisting}
@@ -515,14 +515,14 @@ You can define remote repositories (\emph{remotes}) with \lstinline{git remote a
 \begin{frame}[fragile]
 \frametitle{An Extremely Common Mistake}
 You keep local copies of remote branches in your local repository. For instance, with \lstinline{git branch -a} you might see some branches like this
-\begin{lstlisting}[language=C++]
+\begin{lstlisting}
 $ git branch -a
  * master
    remotes/origin/HEAD -> origin/master
    remotes/origin/master
 \end{lstlisting}
 When you check out a branch that is tracking a remote branch, you will see something like this:
-\begin{lstlisting}[language=C++]
+\begin{lstlisting}
 $ git checkout master
 Switched to branch 'master'
 Your branch is up-to-date with 'origin/master'.
@@ -591,12 +591,12 @@ GitHub
 \end{itemize}
 \item Bitbucket
 \begin{itemize}
-\item is less focused on ``social'' features.
+\item Focuses more on professional teams, with fewer ``social'' features.
 \item will give you unlimited private repositories if you \textbf{sign up with an academic email address}.
 \end{itemize}
 \end{itemize}
 \item Go to \href{https://bitbucket.org}{bitbucket.org} or \href{https://github.com}{github.com} and follow the instructions.
-\item If you hate typing passwords as much as I do, it's worthwhile to set up password-free access with SSH keys\footnote{I won't cover this in detail, but ask me if you are having trouble with this} on
+\item If you hate typing passwords as much as I do, it's worthwhile to set up password-free access with SSH keys
 \href{https://confluence.atlassian.com/bitbucket/set-up-ssh-for-git-728138079.html}{Bitbucket} and
 \href{https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/}{GitHub}.
 \end{itemize}
@@ -612,7 +612,7 @@ Follow the instructions on the site.
 git remote add origin git@bitbucket.org:psanan/myproject.git
 \end{lstlisting}
 \item Tell some or all your local branches to track new remote branches on this remote server
-\begin{lstlisting}[language=C++]
+\begin{lstlisting}
 git push -u origin master
 git push -u origin --all
 \end{lstlisting}
@@ -628,7 +628,7 @@ Let's do this now for our demo project.
 \frametitle{}
 Fortunately, the workflow for joining an existing project hosted on GitHub or bitbucket is very simple!
 Let's perform a typical example:
-\begin{lstlisting}[language=C++]
+\begin{lstlisting}
 git clone git@github.com:psanan/gittutorial-demo.git
 cd gittutorial-demo
 git branch psanan/helloworld
@@ -700,8 +700,8 @@ And let's take a look on GitHub
 \item Git cannot make many assumptions about your data.
 \item Try to make contained commits so that conflicts are localized.
 \item Don't let branches diverge too much. If working on a branch based on \texttt{master} for a long time, periodically merge \texttt{master} in.
-\begin{lstlisting}[language=C++]
-git branch psanan/my-complicated-feature
+\begin{lstlisting}
+git checkout psanan/my-complicated-feature
 [ ... work work commit commit ..]
 git checkout master
 git pull
@@ -738,14 +738,14 @@ Remember useful git commands:
 \begin{itemize}
 \item Option 0: finish your current commit
 \item Option 1: clone a new copy of the code
-\begin{lstlisting}[language=C++]
+\begin{lstlisting}[language=]
 cd ..
 git clone git@github.com:psanan/myproject.git myproject-copy
 cd myproject-copy
 git checkout some-other-branch
 \end{lstlisting}
 \item Option 2: Stash the changes with \lstinline{git stash}
-\begin{lstlisting}[language=C++]
+\begin{lstlisting}
 git stash
 git checkout some-other-branch
 ...
@@ -763,15 +763,16 @@ git stash apply
 For More Help:
 \begin{itemize}
 \item This presentation: \href{https://bitbucket.org/psanan/gittutorial}{https://bitbucket.org/psanan/gittutorial}
+\item 2015 USI course with additional Git material: \href{https://bitbucket.org/psanan/sefcs2015}{Software Engineering for Computational Science}
 \item
 The Git Book: \href{https://git-scm.com/book}{git-scm.com/book}
 \item
 Tutorials on GitHub and Bitbucket
 \item
-Beware \href{https://www.stackoverflow.com}{StackOverflow}: do not panic and start pasting mysterious commands, and note that a lot of the advice is specific to old versions of git.
-\item \href{mailto:patrick.sanan@erdw.ethz.ch}{patrick.sanan@erdw.ethz.ch}
+  Beware \href{https://www.stackoverflow.com}{StackOverflow}: do not panic and start pasting mysterious commands (understand the DAG instead), and note that a lot of the advice is specific to old versions of git.
+\item \href{mailto:patrick.sanan@erdw.ethz.ch}{patrick.sanan@erdw.ethz.ch}, \href{mailto:patrick.sanan@usi.ch}{patrick.sanan@usi.ch} (or gchat, or skype, or come to my office)
 \end{itemize}
-\vspace{50px}
+\vspace{30px}
 {\tiny ``... git actually has a simple design, with stable and reasonably well-documented data structures.
 In fact, I'm a huge proponent of designing your code around the data, rather than the other
 way around, and I think it's one of the reasons git has been fairly successful ... I will, in
