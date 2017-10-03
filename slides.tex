@@ -79,7 +79,7 @@
 \author{Patrick Sanan}
 \institute[USI/ETHZ]
 {
-USI Lugano ICS / ETH Z\"{u}rich D-ERDW\\
+USI Lugano ICS / ETH Zurich D-ERDW\\
 \href{mailto:patrick.sanan@usi.ch}{patrick.sanan@usi.ch}, \href{mailto:patrick.sanan@erdw.ethz.ch}{patrick.sanan@erdw.ethz.ch}
 }
 
@@ -118,7 +118,7 @@ Assumptions about the audience:
 \item You use code
 \item You sometimes feel like you're wasting your time when you work with code, especially when it comes time to collaborate
 \item You know how to use a terminal, shell, terminal-based text editor, and login file on your computer
-\item You don't feel that (short) git tutorials you find online give you sufficient understanding
+\item If you have looked a (short) git tutorials online, you don't find them wholly satisfying
 \end{itemize}
 \end{frame}
 
@@ -206,7 +206,7 @@ We will show how one might invent such a thing.\footnote{inspired by \href{http:
 \frametitle{Other People}
 \begin{itemize}
 \item Now, suppose you and I both have a copy of this \emph{repository} (\texttt{MyProject}) and we want to collaborate.
-\item We have the clever idea that we can name the files by applying a function\footnote{a \emph{cryptographic hash function}} to their contents. Now, if we have files with the same name if and only if we have the same data \tiny{(with overwhelming probablity)}.
+\item We have the clever idea that we can name the files by applying a function\footnote{a \emph{cryptographic hash function} such as SHA-1} to their contents. Now, we have files with the same name if and only if we have the same data\footnote{with overwhelming probability}.
 \end{itemize}
 \includegraphics[scale=0.4]{remote1.png}\\
 \vspace{10px}
@@ -270,7 +270,7 @@ You have a complete copy of the history locally.
 \item A branch is a box which labels a commit
 \item \texttt{HEAD} is a label for a branch
 \item Merges are commits with exactly two parents
-\item Bitbucket, Github, and GUI tools can draw these nicely for you
+\item Bitbucket, GitHub, and GUI tools can draw these nicely for you
 \includegraphics[width=250px]{gitx.png}\\
 (Here, \texttt{HEAD} is marked by coloring the \texttt{master} branch)
 \end{itemize}
@@ -306,7 +306,7 @@ A way to do this is to tell git these things each time you log into a terminal, 
 In addition to specifying your name and email address, I recommend you turn on colors and set your favorite text editor to edit commit messages.
 \begin{lstlisting}[language=]
 git config --global user.name "Patrick Sanan"
-git config --global user.email "patrick.sanan@erdw.ethz.ch"
+git config --global user.email "patrick.sanan@gmail.com"
 git config --global color.status auto
 git config --global color.branch auto
 git config --global core.editor vim
@@ -436,14 +436,14 @@ git log
 \begin{frame}[fragile]
 \frametitle{States of Files}
 It's worth reiterating the different states that files in your working directory can be in.
-\begin{itemize}
+\begin{enumerate}
+\item They can be untracked
+\item They can be be ignored (if you create a special \texttt{.gitignore} file)
 \item They can be unmodified from the current snapshot (determined by \texttt{HEAD})
 \item They can have unstaged changes
 \item They can have staged changes (it is possible to stage parts of files)
-\item They can be untracked
-\item (They can be also be ignored if you create a special \texttt{.gitignore} file)
-\item \lstinline{git status} will tell you about the states of files
-\end{itemize}
+\end{enumerate}
+\lstinline{git status} will tell you about the states of files
 \end{frame}
 
 \begin{frame}[fragile]
@@ -481,7 +481,7 @@ The most common way to start working on a git project
 \item Make a copy of a project on GitHub or Bitbucket (or somewhere else) with \lstinline{git clone}
 \item You only need to know the address of the repository. You can copy it from a GitHub or Bitbucket page.
 \begin{lstlisting}[language=]
-git clone git@bitbucket.org:psanan/gittutorial.git
+git clone https://www.bitbucket.org/psanan/gittutorial.git
 \end{lstlisting}
 \item You may have to enter your username and password
 \item This creates a new local repository as a copy of the remote repository.
@@ -597,9 +597,9 @@ GitHub
 \end{itemize}
 \end{itemize}
 \item Go to \href{https://bitbucket.org}{bitbucket.org} or \href{https://github.com}{github.com} and follow the instructions.
-\item If you hate typing passwords as much as I do, it's worthwhile to set up password-free access with SSH keys
-\href{https://confluence.atlassian.com/bitbucket/set-up-ssh-for-git-728138079.html}{Bitbucket} and
-\href{https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/}{GitHub}.
+\item If you hate typing passwords as much as I do, it's worthwhile to set up password-free access with SSH keys (Instructions:
+\href{https://confluence.atlassian.com/bitbucket/set-up-ssh-for-git-728138079.html}{Bitbucket},
+    \href{https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/}{GitHub}).
 \end{itemize}
 \end{frame}
 

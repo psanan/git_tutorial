@@ -140,7 +140,8 @@ Assumptions about the audience:
 \item \lstinline{git diff}
 \begin{itemize}
 \item \lstinline{git diff file.ext}
-\item \lstinline{git diff a7869c2} , \lstinline{git diff a7869c2 file.ext}
+\item \lstinline{git diff a7869c2}
+\item \lstinline{git diff a7869c2 file.ext}
 \item \lstinline{git diff --staged}
 \item \lstinline{git difftool} [one of the few times that a GUI is perhaps worth it]
 \end{itemize}
@@ -151,8 +152,9 @@ Assumptions about the audience:
 \frametitle{.gitignore}
 \begin{itemize}
 \item You often want to mark certain files as ineligible for commits
-\item Temporary files (\lstinline{*.DS_store},\lstinline{.*.swp})
+\item Temporary files (\lstinline{*.DS_Store},\lstinline{.*.swp})
 \item Objects and executables
+\item Configuration files
 \item Large files
 \item Git will ignore any files listed in \lstinline{.gitignore}
 \item Subdirectories can have their own \lstinline{.gitignore}
@@ -166,8 +168,8 @@ git help gitignore
 \begin{frame}[fragile]
 \frametitle{Git Bisect}
 \begin{itemize}
-\item As pointed out before, having a (quickly verified) ``good'' state and a (quickly verified) ``bad'' state, with respect to a given problem you would like to repair, is a position of enormous strength.
-\item You can find out which is the first ``bad'' commit by running $\lceil \log_2{N} \rceil$ tests, where $N$ is the number of commit between a known ``good'' commit and a known ``bad'' commit.
+\item Having a (quickly verified) ``good'' state and a (quickly verified) ``bad'' state, with respect to a given problem you would like to repair, is a position of enormous strength.
+\item You can find out which is the first ``bad'' commit by running at most $\lceil \log_2{N} \rceil$+1 tests, where $N$ is the number of commit between a known ``good'' commit and a known ``bad'' commit.
 \item \lstinline{git bisect} allows specifiying commits as good or bad, until the first bad commit is identified
 \begin{lstlisting}[language=C++,
 basicstyle=\tiny\ttfamily]
@@ -192,14 +194,17 @@ git bisect reset
 \item Also try \lstinline{git bisect log}
 \item You can move \lstinline{HEAD} around during a bisection, say if one commit represents a non-working state.
 \begin{lstlisting}[language=C++]
-git reset HEAD~2
+git checkout HEAD~2
 \end{lstlisting}
 \item \lstinline{git bisect skip} attempts to do this automatically (choosing a nearby commit)
 \item You can limit to commits which affect certain paths
 \begin{lstlisting}[language=C++]
 git bisect start -- some/path some/other/path
 \end{lstlisting}
-\item You can even automate the tests with \lstinline{git bisect run test_exec args}
+\item You can even automate the tests
+\begin{lstlisting}
+git bisect run test_exec args
+\end{lstlisting}
 \end{itemize}
 \end{frame}
 
@@ -347,8 +352,8 @@ However, you will need these dangerous operations, so it is a great idea to lear
 \frametitle{Resetting, Cont.}
 \begin{itemize}
 \item \lstinline{git reset} gives you some more options, by making 1-3 changes.
-\item \lstinline{git reset --soft} Simply move the branch pointed to by \lstinline{HEAD}. The index and the working directory are left the same.
-\item Unless you specify \lstinline{--soft}, the index is also updated to match what \lstinline{HEAD} now points to. The information about what you have staged is lost.
+\item \lstinline{git reset --soft} Simply move the branch pointed to by \lstinline{HEAD}. The index (staging area) and the working directory are left the same.
+\item Unless you specify \lstinline{--soft}, the index is also updated to match what \lstinline{HEAD} now points to. The information about what you have staged is \textbf{lost}.
 \item \lstinline{git reset --hard} additionally updates the working directory to the same stage as pointed to by \lstinline{HEAD}. This \textbf{destroys information}.
 \end{itemize}
 \end{frame}
@@ -373,7 +378,7 @@ git reset HEAD file1 # the same
 \begin{frame}[fragile]
 \frametitle{Interactive Rebasing}
 \begin{itemize}
-\item The standard way to make changes further back in history
+\item A way to make changes further back in history
 \item Replays commits one at a time, allowing you to modify them:
 \begin{itemize}
 \item Reorder
@@ -409,7 +414,7 @@ git reset HEAD file1 # the same
 \item Commits can also be replayed onto another point in the tree
 \item This creates new commits, and may require manual resolution of conflicts
 \begin{itemize}
-\item These are resolved just like the merge conflicts we saw in week 4.
+\item These are resolved just like the merge conflicts we saw before.
 \end{itemize}
 \end{itemize}
 \end{frame}
@@ -534,16 +539,16 @@ git reset --hard myremote/mybranch
 \begin{itemize}
 \item You commited a huge file accidentally
 \item You commited a file with sensitive data (passwords, keys, personal information, etc.)
+\end{itemize}
 \item Obviously, as the point is precisely destroy information, it is irreversible, hence dangerous.
 \item Git provides \lstinline{git filter-branch} to do this (and more)
-\item Demo
+\item Example
 \begin{itemize}
-\item Create a new git repo and some commits, including a file with a password in it
+  \item Say we have a file, \lstinline{PURGETHISILE}, with a password in it.
 \item To purge this file everywhere, \lstinline{git filter-branch --tree-filter 'rm -f PURGETHISFILE' HEAD}
 \end{itemize}
 \item Use \texttt{-all} to run the filter on all branches
 \item You can make a backup of your branch before doing this, as with a rebase, to test.
-\end{itemize}
 \end{itemize}
 \end{frame}
 
@@ -598,7 +603,6 @@ The Git Book: \href{https://git-scm.com/book}{git-scm.com/book}
 Tutorials on GitHub and Bitbucket
 \item
 Beware \href{https://www.stackoverflow.com}{StackOverflow}: do not panic and start pasting mysterious commands, and note that a lot of the advice is specific to old versions of git.
-\item \href{mailto:patrick.sanan@erdw.ethz.ch}{patrick.sanan@erdw.ethz.ch}
 \end{itemize}
 \vspace{50px}
 {\tiny ``... git actually has a simple design, with stable and reasonably well-documented data structures.
