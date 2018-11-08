@@ -1,10 +1,10 @@
 .*.swp
-*.vrb 
-*.aux 
-*.log 
-*.toc 
-*.snm 
-*.out 
+*.vrb
+*.aux
+*.log
+*.toc
+*.snm
+*.out
 *.nav
 *.fdb_latexmk
 *.fls
