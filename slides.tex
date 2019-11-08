@@ -127,7 +127,7 @@ Assumptions about the audience:
 \begin{itemize}
 \item Give an idea of the fairly simple (beautiful) data structure which git manipulates
 \item Give an introduction to the (less beautiful) way you can interact with this from the command line
-\item Show some of the benefits of using services like Bitbucket or GitHub
+\item Show some of the benefits of using services like Bitbucket, GitHub, or GitLab
 \item Give a few very simple demonstrations
 \item Hopefully, convince you that these tools are worth investing the time to learn more thoroughly
 \end{itemize}
@@ -270,7 +270,7 @@ You have a complete copy of the history locally.
 \item A branch is a box which labels a commit
 \item \texttt{HEAD} is a label for a branch
 \item Merges are commits with exactly two parents
-\item Bitbucket, GitHub, and GUI tools can draw these nicely for you
+\item Bitbucket, GitHub, GitLab, and GUI tools can draw these nicely for you
 \includegraphics[width=250px]{gitx.png}\\
 (Here, \texttt{HEAD} is marked by coloring the \texttt{master} branch)
 \end{itemize}
@@ -478,10 +478,10 @@ The Git Book : free at \href{https://git-scm.com/book}{git-scm.com/book} \\
 \begin{itemize}
 \item
 The most common way to start working on a git project
-\item Make a copy of a project on GitHub or Bitbucket (or somewhere else) with \lstinline{git clone}
-\item You only need to know the address of the repository. You can copy it from a GitHub or Bitbucket page.
+\item Make a copy of a project with \lstinline{git clone}, knowing its URL
+\item You only need to know the address of the repository. You often copy it from a Bitbucket/GitHub/GitLab page.
 \begin{lstlisting}[language=]
-git clone https://www.bitbucket.org/psanan/gittutorial.git
+git clone https://www.bitbucket.org/psanan/example_bib_repo
 \end{lstlisting}
 \item You may have to enter your username and password
 \item This creates a new local repository as a copy of the remote repository.
@@ -533,11 +533,11 @@ If you want to make sure you are really up to date, you must call \lstinline{git
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{Bitbucket and GitHub}
+\frametitle{Web-based repository hosting and tools: Bitbucket, GitHub, and GitLab}
 \begin{itemize}
 \item These (freemium) services host remote git repositories for you.
-\item For both open and closed source code.
 \item These repositories are essentially the same as your local ones.
+\item In addition, they provide additional workflow-management functionality through their web interfaces.
 \item Nice graphical overviews of your project and interactive web tools.
 \includegraphics[scale=0.15]{bitbucket2}
 \includegraphics[scale=0.15]{bitbucket3}
@@ -546,60 +546,44 @@ If you want to make sure you are really up to date, you must call \lstinline{git
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{Bitbucket and GitHub}
+\frametitle{Web-based tools: key additional features}
 \begin{itemize}
-\item Comment directly on commits and code lines (easy code review)
+  \item Web-based visualization of source code and git history
+  \item Commenting
+  \item Pull Requests (PRs) or Merge Request (MRs) to formalize the process of asking one branch to be merged into another
+  \item Interfaces to other services, notable testing and continuous integration (CI) tools
+  \item ``Social'' features (particularly on GitHub)
+  \item Let you set up SSH keys for passwordless interaction with the remote (highly recommended)
 \includegraphics[scale=0.3]{bitbucket1}
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]
-\frametitle{Bitbucket and GitHub}
-\begin{itemize}
-\item You can receive and respond to these messages in your email program.\\
-\includegraphics[scale=0.3]{bitbucket5}
-\end{itemize}
-\end{frame}
 
 \begin{frame}[fragile]
-\frametitle{Bitbucket and GitHub}
+\frametitle{GitHub vs. GitLab vs. Bitbucket?}
 \begin{itemize}
-\item Sign up for email notification when commits are pushed, fantastic for remote collaborations.
-\item This is currently easier on Bitbucket than GitHub.\\
-\includegraphics[scale=0.3]{bitbucket4}
-\end{itemize}
-\end{frame}
-
-
-\begin{frame}[fragile]
-\frametitle{Bitbucket and GitHub}
-\begin{itemize}
-\item Easily share your code, get it from anywhere, make it public when you want to. \\
-\includegraphics[scale=0.3]{github1}
-\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
-\frametitle{Setting Up An Account}
-\begin{itemize}
-\item Bitbucket vs. GitHub? Very similar in most ways, but
+\item Very similar in most ways
+\item Keep in mind: you control the material in your actual git repository, and you can very easily move it. Additional information (wikis, issue trackers, etc.) is at the mercy the companies that run these websites.
 \begin{itemize}
 \item
 GitHub
 \begin{itemize}
-\item is designed with open-source projects and communities in mind.
-\item is becoming the standard for large, open-source projects.
+\item targets open-source projects and communities
+\item is owned by Microsoft
+\item will give you perks for being an academic (you have to apply)
 \end{itemize}
 \item Bitbucket
 \begin{itemize}
-\item Focuses more on professional teams, with fewer ``social'' features.
-\item will give you unlimited private repositories if you \textbf{sign up with an academic email address}.
+\item focuses on professional teams, with fewer ``social'' features.
+\item will give you perks for being an academic (use  your educational email address)
+\item is owned by Atlassian
+\end{itemize}
+\item GitLab
+\begin{itemize}
+\item also allows institutions to set up private web-based services
+\item is owned by GitLab, Inc.
 \end{itemize}
 \end{itemize}
-\item Go to \href{https://bitbucket.org}{bitbucket.org} or \href{https://github.com}{github.com} and follow the instructions.
-\item If you hate typing passwords as much as I do, it's worthwhile to set up password-free access with SSH keys (Instructions:
-\href{https://confluence.atlassian.com/bitbucket/set-up-ssh-for-git-728138079.html}{Bitbucket},
-    \href{https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/}{GitHub}).
 \end{itemize}
 \end{frame}
 
@@ -630,25 +614,24 @@ Let's do this now for our demo project.
 Fortunately, the workflow for joining an existing project hosted on GitHub or bitbucket is very simple!
 Let's perform a typical example:
 \begin{lstlisting}
-git clone git@github.com:psanan/gittutorial-demo.git
-cd gittutorial-demo
-git branch psanan/helloworld
-git checkout psanan/helloworld
-vim hello.c
-git add hello.c
-vim README.md
-git add README.md
+git clone https://bitbucket.org/psanan/example_bib_repo
+cd example_bib_repo
+git branch myname/new-references     # change "myname" to your username
+git checkout myname/new-references   # change "myname" to your username
+vim references.bib                   # or otherwise edit
+git add references.bib
 git status
 git commit
-git push -u origin psanan/helloworld
+git push -u origin myname/new-references  # Take a look at bitbucket.org/psanan/example/bib_repo/branches
+# (Wait for a change on the master branch)
+git fetch
 git checkout master
-vim README.md
-git add README.md
-git commit
-git merge psanan/helloworld
+git status
+git pull
+git checkout myname/new-references
+git merge master
 git push
 \end{lstlisting}
-And let's take a look on GitHub
 \end{frame}
 
 \section{More selling points}
@@ -662,7 +645,8 @@ And let's take a look on GitHub
 \item An easy way to share your project
 \item An easy way to join or use other projects
 \item A nice way to organize your work
-\item A good way to efficiently work with remote collaborators on code (or a paper)
+\item A good way to efficiently work with remote collaborators
+\item A good way to uniquely identify versions of your code used in publications or experiments
 \end{itemize}
 \end{frame}
 
