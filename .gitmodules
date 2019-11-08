@@ -1,0 +1,3 @@
+[submodule "example_bib_repo"]
+	path = example_bib_repo
+	url = git@bitbucket.org:psanan/example_bib_repo
