@@ -67,9 +67,6 @@
 
 \graphicspath{{./images/}}
 
-% clashes with beamer
-%\usepackage[colorlinks=true]{hyperref}
-
 \usepackage{booktabs}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -77,9 +74,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \author{Patrick Sanan}
-\institute[USI/ETHZ]
+\institute[ETHZ]
 {
-ETH Zurich D-ERDW\\
+ETH Zurich\\
 \href{mailto:patrick.sanan@erdw.ethz.ch}{patrick.sanan@erdw.ethz.ch}
 }
 
@@ -100,7 +97,7 @@ ETH Zurich D-ERDW\\
 \begin{frame}[fragile]
 \titlepage
 \begin{center}
-\href{https://bitbucket.org/psanan/gittutorial}{https://bitbucket.org/psanan/gittutorial}
+\href{https://github.com/psanan/git_tutorial}{https://github.com/psanan/git\_tutorial}
 \end{center}
 \end{frame}
 
@@ -588,8 +585,7 @@ GitHub
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{Putting your Project on GitHub or Bitbucket}
-Follow the instructions on the site.
+\frametitle{Putting your Project on GitHub, Bitbucket, or GitLab}
 \begin{itemize}
 \item With the website interface, create a git repository on the remote server
 \item Tell your local repository about the address
@@ -714,7 +710,7 @@ Remember useful git commands:
 \item \lstinline{git remote -vv}
 \end{itemize}
 \item Use a \href{https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh}{terminal prompt which shows git status}\footnote{follow link or google ``git prompt'' which should bring up a commonly-used script called \texttt{git-prompt.sh}}.
-\item Visualize your project with a GUI tool or with Bitbucket/GitHub
+\item Visualize your project with a local GUI tool or on a web-based service
 \end{itemize}
 \end{frame}
 
@@ -747,15 +743,18 @@ git stash apply
 
 For More Help:
 \begin{itemize}
-\item This presentation: \href{https://bitbucket.org/psanan/gittutorial}{https://bitbucket.org/psanan/gittutorial}
-\item 2015 USI course with additional Git material: \href{https://bitbucket.org/psanan/sefcs2015}{Software Engineering for Computational Science}
+\item This presentation: \href{https://github.com/psanan/git_tutorial}{github.com/psanan/git\_tutorial}
 \item
 The Git Book: \href{https://git-scm.com/book}{git-scm.com/book}
 \item
-Tutorials on GitHub and Bitbucket
+Myriad tutorials and cheat sheets on the web
 \item
-  Beware \href{https://www.stackoverflow.com}{StackOverflow}: do not panic and start pasting mysterious commands (understand the DAG instead), and note that a lot of the advice is specific to old versions of git.
-\item \href{mailto:patrick.sanan@erdw.ethz.ch}{patrick.sanan@erdw.ethz.ch}, \href{mailto:patrick.sanan@usi.ch}{patrick.sanan@usi.ch} (or gchat, or skype, or come to my office)
+  Beware \href{https://www.stackoverflow.com}{StackOverflow}: do not panic and start pasting mysterious commands
+\item If confused, take a moment to think about what you want to do in terms of
+  \begin{itemize}
+    \item The DAG
+    \item Local vs. remote repositories
+  \end{itemize}
 \end{itemize}
 \vspace{30px}
 {\tiny ``... git actually has a simple design, with stable and reasonably well-documented data structures.
