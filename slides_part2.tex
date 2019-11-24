@@ -1,89 +1,4 @@
-\documentclass{beamer}
-\usepackage{algorithm}
-\usepackage[noend]{algpseudocode}
-\usepackage{courier}
-\usepackage{listings}
-\usepackage{xcolor}
-\definecolor{verylightgray}{gray}{0.95}
-\definecolor{somewhatdarkgray}{gray}{0.3}
-\lstset{
-  language=,
-  basicstyle=\footnotesize\ttfamily,
-  numberstyle=\tiny,
-  numbersep=5pt,
-  tabsize=2,
-  extendedchars=true,
-  breaklines=true,
-  keywordstyle=\color{red},
-  stringstyle=\color{blue}\ttfamily,
-  numberstyle=\color{violet},
-  showspaces=false,
-  showtabs=false,
-  showstringspaces=false,
-  backgroundcolor=\color{verylightgray},
-  frame=single,
-  framexleftmargin=3px,
-  framexrightmargin=3px,
-  rulecolor=\color{lightgray},
-  basewidth=0.5em,                % For consistent spacing with inline listings
-  columns=flexible,               % For copy-pasting
-}
-\usepackage{color}
-\usepackage{amsmath}
-
-\definecolor{greenmod}{rgb}{0,0.6,0}
-
-\hypersetup{linkcolor=magenta,colorlinks=true}
-
-\usetheme{Madrid}
-\setbeamertemplate{navigation symbols}{} % Remove the navigation symbols
-\setbeamertemplate{sections/subsections in toc}[default] %Turn off ugly toc numbering
-\setbeamertemplate{itemize subitem}[triangle]
-\setbeamertemplate{itemize item}[triangle]
-\setbeamertemplate{enumerate items}[default]
-%\setbeamercovered{transparent}
-\usepackage{appendixnumberbeamer}
-\defbeamertemplate{section page}{customsection}[1][]{%
-  \begin{centering}
-    {\usebeamerfont{section name}\usebeamercolor[fg]{section name}#1}
-    \vskip1em\par
-    \begin{beamercolorbox}[sep=12pt,center]{part title}
-      \usebeamerfont{section title}\insertsection\par
-    \end{beamercolorbox}
-  \end{centering}
-}
-\defbeamertemplate{subsection page}{customsubsection}[1][]{%
-  \begin{centering}
-    {\usebeamerfont{subsection name}\usebeamercolor[fg]{subsection name}#1}
-    \vskip1em\par
-    \begin{beamercolorbox}[sep=8pt,center,#1]{part title}
-      \usebeamerfont{subsection title}\insertsubsection\par
-    \end{beamercolorbox}
-  \end{centering}
-}
-\AtBeginSection{\frame{\sectionpage}}
-\AtBeginSubsection{\frame{\subsectionpage}}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\graphicspath{images/}
-
-% clashes with beamer
-%\usepackage[colorlinks=true]{hyperref}
-
-\usepackage{booktabs}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\author{Patrick Sanan}
-%\institute[ETHZ]
-%{
-%ETH Z\"{u}rich D-ERDW\\
-%}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{preamble.tex}
 
 \title{A Git Tutorial: More Topics}
 \subtitle[]{}
@@ -100,7 +15,7 @@
 \begin{frame}[fragile]
 \titlepage
 \begin{center}
-\href{https://bitbucket.org/psanan/gittutorial}{https://bitbucket.org/psanan/gittutorial}
+\href{https://github.com/psanan/git_tutorial}{https://github.com/psanan/git\_tutorial}
 \end{center}
 \end{frame}
 
@@ -596,13 +511,7 @@ git cherry-pick 132a53
 
 For More Help:
 \begin{itemize}
-\item This presentation: \href{https://bitbucket.org/psanan/gittutorial}{https://bitbucket.org/psanan/gittutorial}
-\item
-The Git Book: \href{https://git-scm.com/book}{git-scm.com/book}
-\item
-Tutorials on GitHub and Bitbucket
-\item
-Beware \href{https://www.stackoverflow.com}{StackOverflow}: do not panic and start pasting mysterious commands, and note that a lot of the advice is specific to old versions of git.
+\item The Git Book: \href{https://git-scm.com/book}{git-scm.com/book}
 \end{itemize}
 \vspace{50px}
 {\tiny ``... git actually has a simple design, with stable and reasonably well-documented data structures.
