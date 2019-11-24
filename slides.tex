@@ -403,13 +403,13 @@ git log
 \item Recall that a merge commit is like a normal commit, but with two parents.
 \item When you merge two branches and git cannot figure out how to merge the changes, you will have to do some work. This can be frustrating.
 \item Files will be specially flagged and annotated with special markers:
-\begin{verbatim}
+\begin{lstlisting}[language=]
 <<<<<<< HEAD
 numIterations = 3;
 =======
 numIterations = 4;
 >>>>>>> psanan/data-reorganize
-\end{verbatim}
+\end{lstlisting}
 \item You must remove the special annotations and stage the file
 \item Once all flagged files are staged, commit as usual
 \end{itemize}
@@ -478,7 +478,7 @@ The most common way to start working on a git project
 \item Make a copy of a project with \lstinline{git clone}, knowing its URL
 \item You only need to know the address of the repository. You often copy it from a Bitbucket/GitHub/GitLab page.
 \begin{lstlisting}[language=]
-git clone https://www.bitbucket.org/psanan/example_bib_repo
+git clone https://bitbucket.org/psanan/example_bib_repo
 \end{lstlisting}
 \item You may have to enter your username and password
 \item This creates a new local repository as a copy of the remote repository.
@@ -566,8 +566,8 @@ If you want to make sure you are really up to date, you must call \lstinline{git
 GitHub
 \begin{itemize}
 \item targets open-source projects and communities
-\item is owned by Microsoft
 \item will give you perks for being an academic (you have to apply)
+\item is owned by Microsoft
 \end{itemize}
 \item Bitbucket
 \begin{itemize}
@@ -607,27 +607,46 @@ Let's do this now for our demo project.
 
 \begin{frame}[fragile]
 \frametitle{}
-Fortunately, the workflow for joining an existing project hosted on GitHub or bitbucket is very simple!
-Let's perform a typical example:
+\begin{itemize}
+\item Fortunately, the workflow for joining an existing project hosted on a service like GitHub/Bitbucket/GitLab is very simple!
+\item To fully ``play along'' with the example, you'll need to sign up for an account on \href{bitbucket.org}{BitBucket} (use your academic email address if possible)
+\item Let me know your BitBucket username, so I can give you access to a repository.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{}
+Let's perform a typical example, collaborating on a repository to which you have write access (this could be a private repository).
 \begin{lstlisting}
 git clone https://bitbucket.org/psanan/example_bib_repo
 cd example_bib_repo
-git branch myname/new-references     # change "myname" to your username
-git checkout myname/new-references   # change "myname" to your username
-vim references.bib                   # or otherwise edit
+git branch myname/new-reference     # change "myname" to your username
+git checkout myname/new-reference   # change "myname" to your username
+vim references.bib                  # or otherwise edit. Add your favorite paper!
 git add references.bib
 git status
 git commit
-git push -u origin myname/new-references  # Take a look at bitbucket.org/psanan/example/bib_repo/branches
+git push -u origin myname/new-reference  # change "myname". You need write access!
 # (Wait for a change on the master branch)
 git fetch
 git checkout master
 git status
 git pull
-git checkout myname/new-references
+git checkout myname/new-references   # change "myname"
 git merge master
 git push
 \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Aside: What if I don't have write acces?}
+\begin{itemize}
+\item What if you don't have write access, but want to contribute to a repository?
+\item Simple - you create a \emph{fork}.
+\item A fork is simply another copy of a repository, which you control
+\item GitHub/GitLab/BitBucket give you a button on their web interfaces to do this automatically.
+\item GitHub/GitLab/BitBucket's pull request / merge requests can be made between different forks.
+\end{itemize}
 \end{frame}
 
 \section{More selling points}
@@ -675,13 +694,15 @@ git push
 
 \begin{frame}[fragile]
 \frametitle{Merging is terrible!!}
+\begin{center}
 \includegraphics[width=70px]{chimera.jpg}
+\end{center}
 \begin{itemize}
 \item Yes. It's fundamentally difficult. Often it will ``just work'' with git.
 \item Git cannot make many assumptions about your data.
 \item Try to make contained commits so that conflicts are localized.
-\item Don't let branches diverge too much. If working on a branch based on \texttt{master} for a long time, periodically merge \texttt{master} in.
-\begin{lstlisting}
+\item Don't let branches diverge. If you must work on a branch based on \texttt{master} for a long time, periodically merge \texttt{master} in.
+\begin{lstlisting}[basicstyle=\tiny\ttfamily]
 git checkout psanan/my-complicated-feature
 [ ... work work commit commit ..]
 git checkout master
@@ -696,21 +717,22 @@ git merge master
 
 \begin{frame}[fragile]
 \frametitle{Where am I?? What's going on??}
-\includegraphics[width=100px]{term}\scalebox{3}{???}
+\begin{center}
+\includegraphics[width=80px]{term}\scalebox{2.5}{???}
+\end{center}
 \begin{itemize}
-\item Turn on colors (see setup earlier)
-\item
-Remember useful git commands:
-\begin{itemize}
-\item \lstinline{git status}
-\item \lstinline{git diff [filename]}
-\item \lstinline{git fetch}
-\item \lstinline{git log -10}
-\item \lstinline{git branch -avv} (See \lstinline{git help branch} for the options)
-\item \lstinline{git remote -vv}
-\end{itemize}
-\item Use a \href{https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh}{terminal prompt which shows git status}\footnote{follow link or google ``git prompt'' which should bring up a commonly-used script called \texttt{git-prompt.sh}}.
-\item Visualize your project with a local GUI tool or on a web-based service
+\item Turn on colors (see setup earlier).
+\item Remember useful git commands:
+\begin{lstlisting}[language=]
+git status
+git diff [filename]
+git fetch
+git log -10
+git branch -avv # "git help branch" for the options
+git remote -vv
+\end{lstlisting}
+\item Use a \href{https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh}{terminal prompt which shows git status}.
+\item Visualize your project with a local GUI tool or on a web-based service.
 \end{itemize}
 \end{frame}
 
@@ -723,18 +745,18 @@ Remember useful git commands:
 cd ..
 git clone git@github.com:psanan/myproject.git myproject-copy
 cd myproject-copy
-git checkout some-other-branch
+git checkout psanan/some-other-branch
 \end{lstlisting}
 \item Option 2: Stash the changes with \lstinline{git stash}
 \begin{lstlisting}
 git stash
-git checkout some-other-branch
+git checkout psanan/some-other-branch
 ...
-git checkout my-working-branch
+git checkout psanan/my-working-branch
 git stash apply
 \end{lstlisting}
-\textbf{dangerous} because you need to remember where you were.
-\item Option 3: Throw away all your changes with \lstinline{git reset --hard HEAD} (\textbf{dangerous: this deletes data!})
+\textbf{angerous} because you need to remember where you were.
+\item Option 3: Throw away all your changes with \lstinline{git reset --hard HEAD} (\textbf{very dangerous: this deletes data!})
 \end{itemize}
 \end{frame}
 
@@ -752,7 +774,7 @@ Myriad tutorials and cheat sheets on the web
   Beware \href{https://www.stackoverflow.com}{StackOverflow}: do not panic and start pasting mysterious commands
 \item If confused, take a moment to think about what you want to do in terms of
   \begin{itemize}
-    \item The DAG
+    \item The DAG (The graph describing commits and their relationships)
     \item Local vs. remote repositories
   \end{itemize}
 \end{itemize}
