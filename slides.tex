@@ -239,27 +239,6 @@ Git is simply software that, at its core, does all the things we just mentioned,
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{Aside: Differences from other Version Control Systems}
-Some of you may be scarred by previous version control systems.
-\begin{itemize}
-\item It's very easy to set up a repository and share it with git.
-\item Git (and Mercurial/Hg) are \emph{Distributed Version Control Systems}.
-\begin{itemize}
-\item There is no need to be in constant contact with a central server
-\item You have a copy of everything on your machine
-\item Branching is cheap (just pointers)
-\end{itemize}
-\item It's hard to lose data with git.
-\begin{itemize}
-\item
-You have a complete copy of the history locally.
-\item The files in the \texttt{.git} folder are all named with cryptographic hashes, so if they are corrupted, you will find out.
-\item ``Get out what you put in''.
-\end{itemize}
-\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
 \frametitle{A Git Repository in Graphical Form}
 \begin{itemize}
 \item Git repositories are commonly drawn as Directed Acyclic Graphs (DAGs) (or, imprecisely, ``trees'')
