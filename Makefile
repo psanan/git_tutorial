@@ -1,13 +1,11 @@
-############################      Makefile     #################################
-
 # Note that you can override things from the command line, for example
 #  make LATEXMK=
 
-PDFS = slides.pdf slides_part2.pdf
+PDFS = git_tutorial.pdf git_tutorial_part2.pdf
 
-PDFLATEX=pdflatex --halt-on-error
-BIBTEX=bibtex
-LATEXMK=latexmk
+PDFLATEX = pdflatex --halt-on-error
+BIBTEX   = bibtex
+LATEXMK  = latexmk
 
 all   : $(PDFS)
 
@@ -26,9 +24,8 @@ else
 	$(LATEXMK) $<
 endif
 
-# Clean everything (including final pdfs)
+# Clean everything (excluding final pdfs)
 clean :
 	rm -f *.aux *.log *.bbl *.blg *-blx.bib *.nav *.snm *.toc *.vrb *.run.xml *.out *.spl *.fls *.fdb_latexmk
-	rm -f $(PDFS)
 
-.PHONY : all clean plots
+.PHONY : all clean

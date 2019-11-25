@@ -1,3 +1,5 @@
 # Git Tutorial
 
-The presentation is in `slides.pdf`
+Patrick Sanan (@psanan)
+
+The presentation is in `git_tutorial.pdf`
